@@ -63,14 +63,14 @@ function date_value($obj)
 			}
 			else
 			{
-				if (preg_match('/\+(?<year>[0-9]{4})-(?<month>[0-1][1-9])-00/', $value->time, $m))
+				if (preg_match('/\+(?<year>[0-9]{4})-(?<month>[0-1][0-9])-00/', $value->time, $m))
 				{
 					$result[] = (Integer)$m['year'];
 					$result[] = (Integer)$m['month'];
 				}
 				else
 				{
-					if (preg_match('/\+(?<year>[0-9]{4})-(?<month>[0-1][1-9])-(?<day>[0-3][0-9])/', $value->time, $m))
+					if (preg_match('/\+(?<year>[0-9]{4})-(?<month>[0-1][0-9])-(?<day>[0-3][0-9])/', $value->time, $m))
 					{
 						$result[] = (Integer)$m['year'];
 						$result[] = (Integer)$m['month'];
@@ -135,6 +135,7 @@ function claim_serial_order($v)
 	return $order;
 
 }
+
 
 
 //----------------------------------------------------------------------------------------
@@ -270,20 +271,19 @@ function get_author_info($id, $order, &$obj)
 function wikidata_to_csl($id)
 {
 	$wikidata_to_csl = array(
-		'P304' => 'pages',
+		'P304' => 'page',
 		'P356' => 'DOI',
 		'P433' => 'issue',
 		'P478' => 'volume',
-		'P1476' => 'title',
-	
-		'P577' => 'issued',
-	
+		'P1476' => 'title',	
+		'P577' => 'issued',	
 		'P2093' => 'author',	
-
 	);
 
 	$json = get_one($id);
 	$wd = json_decode($json);
+	
+	print_r($wd);
 	
 	$obj = new stdclass;
 	$obj->id = $id;
@@ -293,6 +293,90 @@ function wikidata_to_csl($id)
 		switch ($k)
 		{
 			// instance 
+			case 'P31':
+				$instances = array();
+				foreach ($claim as $c)
+				{
+					$instances[] = $c->mainsnak->datavalue->value->id;		
+				}
+				
+				$type = '';
+				
+				if ($type == '')
+				{
+					if (in_array('Q13442814', $instances))
+					{
+						$type = 'article-journal';
+					}
+				}
+				if ($type == '')
+				{
+
+					if (in_array('Q18918145', $instances))
+					{
+						$type = 'article-journal';
+					}
+				}
+				if ($type == '')
+				{
+					if (in_array('Q191067', $instances))
+					{
+						$type = 'article-journal';
+					}
+				}
+				if ($type == '')
+				{
+					if (in_array('Q47461344', $instances))
+					{
+						$type = 'book';
+					}
+				}
+				if ($type == '')
+				{
+					if (in_array('Q571', $instances))
+					{
+						$type = 'book';
+					}
+				}
+				if ($type == '')
+				{					
+					if (in_array('Q3331189', $instances))
+					{
+						$type = 'book';
+					}
+				}
+				if ($type == '')
+				{
+					if (in_array('Q1980247', $instances))
+					{
+						$type = 'chapter';
+					}
+				}
+
+				if ($type == '')
+				{
+					if (in_array('Q1266946', $instances))
+					{
+						$type = 'thesis';
+					}
+				}
+
+				if ($type == '')
+				{
+					if (in_array('Q187685', $instances))
+					{
+						$type = 'thesis';
+					}
+				}
+				
+				if ($type == '')
+				{
+					// assume it's an article for now
+					$type = 'article-journal';
+				}
+				
+				$obj->type = $type;
+				break;
 	
 			// simple values
 			case 'P304':
@@ -350,7 +434,7 @@ function wikidata_to_csl($id)
 			case 'P577':
 				$obj->{$wikidata_to_csl[$k]} = new stdclass;
 				$obj->{$wikidata_to_csl[$k]}->{'date-parts'} = array();
-				$obj->{$wikidata_to_csl[$k]}->{'date-parts'}[] = $values = date_value($claim);
+				$obj->{$wikidata_to_csl[$k]}->{'date-parts'}[] = date_value($claim);	
 				break;
 			
 			// author as string
@@ -422,9 +506,9 @@ function wikidata_to_csl($id)
 
 // test
 
-if (1)
+if (0)
 {
-	$id = 'Q99952500';
+	$id = 'Q104457270';
 	$csl = wikidata_to_csl($id);
 	
 	echo json_encode($csl, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
