@@ -474,6 +474,68 @@ function wikidata_to_csl($id)
 				break;
 		
 			// PDF
+			
+			case 'P724': // Internet Archive
+				$value = literal_value_simple($claim);
+				
+				if ($value != '')
+				{
+					// thumbnailUrl = "//archive.org/download/" + id + "/page/cover_thumb.jpg";
+
+
+					$link = new stdclass;
+					$link->URL = 'https://archive.org/download/' . $value . '/' . $value . '.pdf';
+					$link->{'content-type'} = 'application/pdf';
+					
+					// my hack
+					$link->thumbnailUrl = 'https://archive.org/download/' . $value . '/page/cover_thumb.jpg';
+					
+					if (!isset($obj->link))
+					{
+						$obj->link = array();
+					}
+					$obj->link[] = $link;
+				}
+				break;
+				
+			case 'P953': // fulltext 
+				foreach ($claim as $c)
+				{
+					$link = new stdclass;
+					// $link->URL = $c->mainsnak->datavalue->value->value;
+					
+					if (isset($c->qualifiers))
+					{
+						// PDF?
+						if (isset($c->qualifiers->{'P2701'}))
+						{
+							if ($c->qualifiers->{'P2701'}[0]->datavalue->value->id == 'Q42332')
+							{
+								$link->{'content-type'} = 'application/pdf';
+							};
+						}
+						
+						// Archived?
+						if (isset($c->qualifiers->{'P1065'}))
+						{
+							$link->URL = $c->qualifiers->{'P1065'}[0]->datavalue->value;
+							// direct link to PDF
+							$link->URL = str_replace("/http", "if_/http", $link->URL);
+						}						
+					}
+					
+					if (isset($link->URL) && (isset($link->{'content-type'}) && $link->{'content-type'} == 'application/pdf'))
+					{					
+						if (!isset($obj->link))
+						{
+							$obj->link = array();
+						}
+						$obj->link[] = $link;
+					
+					}
+				}		
+				break;
+			
 	
 			default:
 				break;
@@ -498,6 +560,56 @@ function wikidata_to_csl($id)
 		}
 
 		unset($obj->authors);
+		
+		// post process name strings
+		$n = count($obj->author);
+		for ($i = 0; $i < $n; $i++)
+		{
+			// CSL PHP needs atomised names :(
+			if (!isset($obj->author[$i]->family))
+			{
+				// We need to handle author names where there has been a clumsy attempt
+				// (mostly by me) to include multiple language strings
+			
+				// 大橋広好(Hiroyoshi Ohashi)
+				// 韦毅刚/WEI Yi-Gang
+				if (preg_match('/^(.*)\s*[\/|\(]([^\)]+)/', $obj->author[$i]->literal, $m))
+				{
+					// print_r($m);
+					
+					if (preg_match('/\p{Han}+/u', $m[1]))
+					{
+						$obj->author[$i]->literal = $m[2];									
+					}
+					if (preg_match('/\p{Han}+/u', $m[2]))
+					{
+						$obj->author[$i]->literal = $m[1];									
+					}
+					
+				}							
+			
+				$parts = preg_split('/,\s+/', $obj->author[$i]->literal);
+				
+				if (count($parts) == 2)
+				{
+					$obj->author[$i]->family = $parts[0];
+					$obj->author[$i]->given = $parts[1];
+				}
+				else
+				{
+					$parts = preg_split('/\s+/', $obj->author[$i]->literal);
+					
+					if (count($parts) > 1)
+					{
+						$obj->author[$i]->family = array_pop($parts);
+						$obj->author[$i]->given = join(' ', $parts);
+					}
+					
+				}
+			
+			}
+		}
+		
 	}
 	
 	return $obj;
@@ -508,7 +620,8 @@ function wikidata_to_csl($id)
 
 if (0)
 {
-	$id = 'Q104457270';
+	$id = 'Q105118008';
+	$id = 'Q104735653';
 	$csl = wikidata_to_csl($id);
 	
 	echo json_encode($csl, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
