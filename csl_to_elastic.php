@@ -235,11 +235,7 @@ function csl_to_elastic ($csl)
 				$doc->search_display->doi = strtolower($v);
 				$doc->search_data->fulltext_terms[] = $v;				
 				break;
-				
-			case 'PDF':
-				$doc->search_display->pdf = $v;
-				break;
-								
+												
 			case 'URL':
 				$doc->search_display->url = $v;
 				break;	
@@ -251,6 +247,29 @@ function csl_to_elastic ($csl)
 			case 'ZOOBANK':
 				$doc->search_display->zoobank = strtolower($v);
 				$doc->search_data->fulltext_terms[] = $v;				
+				break;
+				
+			case 'link':
+			
+				$pdf = array();
+				foreach ($v as $link)
+				{
+					if (isset($link->{'content-type'}) && $link->{'content-type'} == 'application/pdf')
+					{
+						$pdf[] = $link->URL;
+						
+						if (isset($link->thumbnailUrl))
+						{
+							$doc->search_display->thumbnailUrl = $link->thumbnailUrl;
+						}
+					}				
+				}
+				
+				if (count($pdf) > 0)
+				{
+					$doc->search_display->pdf = $pdf;
+				}
+				
 				break;
 														
 				
@@ -285,7 +304,8 @@ function csl_to_elastic ($csl)
 	}
 	
 	
-	// Create citation strings for searching and also for matching
+	// Create citation strings for searching and also for matching (reconcile API)
+	// Note that this is an array so we can support matching in multiple languages
 	
 	$doc->search_data->bibliographicCitation = array();
 	
