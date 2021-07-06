@@ -13,7 +13,7 @@ mb_internal_encoding("UTF-8");
 // Hosting--------------------------------------------------------------------------------
 
 $site = 'local';
-//$site = 'heroku';
+$site = 'heroku';
 
 switch ($site)
 {
