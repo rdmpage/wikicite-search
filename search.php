@@ -4,8 +4,14 @@
 
 error_reporting(E_ALL);
 
+
 require_once(dirname(__FILE__) . '/config.inc.php');
 require_once(dirname(__FILE__) . '/elastic.php');
+
+require_once('vendor/autoload.php');
+
+use Seboettg\CiteProc\StyleSheet;
+use Seboettg\CiteProc\CiteProc;
 
 //----------------------------------------------------------------------------------------
 // Return a property value if it exists, otherwise an empty string
@@ -172,7 +178,10 @@ function do_search($q, $limit = 5)
 				
 				$item->resultScore = $hit->_score;
 				
-				$item->name = $hit->_source->search_display->name;
+				if (isset($hit->_source->search_display->name))
+				{
+					$item->name = $hit->_source->search_display->name;				
+				}
 			
 				// highlight
 				$item->description = join(' … ', $hit->highlight->{'search_data.fulltext'});
@@ -186,14 +195,74 @@ function do_search($q, $limit = 5)
 					$item->doi = $hit->_source->search_display->doi;
 				}
 				
+				// Handle
+				if (isset($hit->_source->search_display->handle))
+				{
+					$item->handle = $hit->_source->search_display->handle;
+				}				
+
+				// JSTOR
+				if (isset($hit->_source->search_display->jstor))
+				{
+					$item->jstor = $hit->_source->search_display->jstor;
+				}
+				
 				// PDF
 				if (isset($hit->_source->search_display->pdf))
 				{
 					$item->contentUrl = $hit->_source->search_display->pdf;
 				}
 				
+				// thumbnail
+				if (isset($hit->_source->search_display->thumbnailUrl))
+				{
+					$item->thumbnailUrl = $hit->_source->search_display->thumbnailUrl;
+				}
+				
 				// CSL
+				// This breaks api_reconciliation if it produces any warnings, e.g. because 
+				// I haven't handled dates correctly :(
+				if (1)
+				{
+					$csl = $hit->_source->search_display->csl;
+					
+					$item->csl = json_encode($csl, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 
+					if (0)
+					{
+						echo '<pre>';
+						print_r($hit->_source->search_display->csl);
+						echo '</pre>';
+					}
+					
+					
+					if (!isset($csl->type))
+					{
+						$csl->type = 'article-journal';
+					}
+					
+					// suppress empty dates caused by parsing bug
+					if (isset($csl->issued->{'date-parts'}))
+					{
+						if ($csl->issued->{'date-parts'}[0] == array())
+						{
+							unset($csl->issued);
+						}
+					}
+										
+					$style = 'apa';
+					
+					$style_sheet = StyleSheet::loadStyleSheet($style);
+					$citeProc = new CiteProc($style_sheet);
+					$html = $citeProc->render(array($csl), "bibliography");
+
+					$text = strip_tags($html);
+					$text = trim(html_entity_decode($text, ENT_QUOTES | ENT_HTML5, 'UTF-8'));
+					
+					//$text = $html;
+
+					$item->formattedCitation  = $text;
+				}
 
 				$output->{'@graph'}[0]->dataFeedElement[] = $item;
 			}			
@@ -274,8 +343,8 @@ if (0)
 		
 		if (isset($item->doi))
 		{
-			echo '<div>';
-			echo $item->doi;
+			echo '<div style="font-size:0.8em;color:#222;margin:4px;">';
+			echo $item->description;
 			echo '</div>';
 		}
 	

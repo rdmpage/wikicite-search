@@ -235,6 +235,14 @@ function csl_to_elastic ($csl)
 				$doc->search_display->doi = strtolower($v);
 				$doc->search_data->fulltext_terms[] = $v;				
 				break;
+				
+			case 'HANDLE':
+				$doc->search_display->handle = $v;
+				break;								
+				
+			case 'JSTOR':
+				$doc->search_display->jstor = $v;
+				break;				
 												
 			case 'URL':
 				$doc->search_display->url = $v;
@@ -369,6 +377,7 @@ function upload ($csl)
 	$doc = csl_to_elastic($csl);
 
 	print_r($doc);
+	//print_r($csl);
 	
 	$elastic_doc = new stdclass;
 	$elastic_doc->doc = $doc;
@@ -381,4 +390,3 @@ function upload ($csl)
 
 
 ?>
-

@@ -49,9 +49,12 @@ if (file_exists(dirname(__FILE__) . '/env.php'))
 
 $config['cache'] = dirname(__FILE__) . '/cache';
 
+// External hard drive
+$config['cache'] = '/Volumes/Ultra Touch/wikicite-search/cache';
+
 
 $config['platform'] = 'local';
-//$config['platform'] = 'cloud';
+$config['platform'] = 'cloud';
 
 if ($config['platform'] == 'local')
 {
@@ -72,9 +75,9 @@ if ($config['platform'] == 'cloud')
 
 	// Bitnami
 	$config['elastic_options'] = array(
-			'index' 	=> 'elasticsearch/wikicite',
+			'index' 	=> 'wikicite',
 			'protocol' 	=> 'http',
-			'host' 		=> '35.204.73.93',
+			'host' 		=> '34.65.169.199',
 			'port' 		=> 80,
 			'user' 		=> getenv('ELASTIC_USERNAME'),
 			'password' 	=> getenv('ELASTIC_PASSWORD'),

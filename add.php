@@ -7,12 +7,9 @@ error_reporting(E_ALL);
 require_once(dirname(__FILE__) . '/csl.php');
 require_once(dirname(__FILE__) . '/csl_to_elastic.php');
 
-$filename = "ids.txt";
-//$filename = "cockroaches.txt";
-//$filename = "test.txt";
-//$filename = "extra.txt";
-$filename = "Araneae.txt";
-$filename = "ion.txt";
+
+$filename = "extra.txt";
+$filename = "test.txt";
 
 $count = 1;
 
@@ -25,14 +22,18 @@ while (!feof($file_handle))
 	{
 		$obj = wikidata_to_csl($id);
 		
-		upload($obj);
-	
-		// Give server a break every 100 items
-		if (($count++ % 100) == 0)
+		if ($obj)
 		{
-			$rand = rand(1000000, 3000000);
-			echo "\n ...sleeping for " . round(($rand / 1000000),2) . ' seconds' . "\n\n";
-			usleep($rand);
+		
+			upload($obj);
+	
+			// Give server a break every 100 items
+			if (($count++ % 100) == 0)
+			{
+				$rand = rand(1000000, 3000000);
+				echo "\n ...sleeping for " . round(($rand / 1000000),2) . ' seconds' . "\n\n";
+				usleep($rand);
+			}
 		}
 	}	
 }	

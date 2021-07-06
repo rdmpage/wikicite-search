@@ -273,6 +273,8 @@ function wikidata_to_csl($id)
 	$wikidata_to_csl = array(
 		'P304' => 'page',
 		'P356' => 'DOI',
+		'P1184' => 'HANDLE',
+		'P888' => 'JSTOR',
 		'P433' => 'issue',
 		'P478' => 'volume',
 		'P1476' => 'title',	
@@ -283,7 +285,10 @@ function wikidata_to_csl($id)
 	$json = get_one($id);
 	$wd = json_decode($json);
 	
-	print_r($wd);
+	if (!$wd)
+	{
+		return null;
+	}
 	
 	$obj = new stdclass;
 	$obj->id = $id;
@@ -392,16 +397,31 @@ function wikidata_to_csl($id)
 				break;
 			
 			// DOI
-			case 'P356':
-		
+			case 'P356':		
 				$value = literal_value_simple($claim);
 				if ($value != '')
 				{
 					$obj->{$wikidata_to_csl[$k]} = strtolower($value);
-				}
-		
-				break;
-			
+				}		
+				break;	
+
+			// Handle
+			case 'P1184':		
+				$value = literal_value_simple($claim);
+				if ($value != '')
+				{
+					$obj->{$wikidata_to_csl[$k]} = strtolower($value);
+				}		
+				break;	
+				
+			// JSTOR
+			case 'P888':		
+				$value = literal_value_simple($claim);
+				if ($value != '')
+				{
+					$obj->{$wikidata_to_csl[$k]} = strtolower($value);
+				}		
+				break;									
 			
 			// title
 			case 'P1476':
@@ -622,6 +642,10 @@ if (0)
 {
 	$id = 'Q105118008';
 	$id = 'Q104735653';
+	$id = 'Q91587697';
+	$id = 'Q106929660';
+	$id = 'Q106968114';
+	
 	$csl = wikidata_to_csl($id);
 	
 	echo json_encode($csl, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);

@@ -6,6 +6,7 @@
 	<array>
 		<string>6809E09F-1C72-4382-A40A-E9CF90AC896B</string>
 		<string>511125E8-D90A-4DB0-9DEC-C57BE18A3501</string>
+		<string>5C967865-3488-4239-B262-255F9670348D</string>
 		<string>2DF98F0D-F50B-4D76-BCEA-C2C6B0CC5894</string>
 		<string>A8480C6D-AA56-4A49-9386-FBCBCB59583A</string>
 		<string>A428F9AD-1744-4598-977A-92F4DD9027AB</string>
@@ -14,6 +15,8 @@
 		<string>4B675C22-BB72-4A0B-9EFF-6A52828A5A95</string>
 		<string>48E0FBE0-734F-4477-B253-89B2BDA3A409</string>
 		<string>0ADD5A2C-37A8-4E98-B367-8324740B8BEE</string>
+		<string>94F239FF-0829-4A9B-AAEC-C05E2DBE34D2</string>
+		<string>F3B475F3-3EDD-4BD8-AC51-EE990BFF79DF</string>
 		<string>A6E4A5E1-2C7A-4E9E-971B-71F06D69E7EE</string>
 		<string>00E7A0BB-3366-43B9-A268-BF0D55F16431</string>
 		<string>4DE2D8DF-2F0E-4AE6-88C4-323EC068AFD8</string>
@@ -23,7 +26,9 @@
 		<string>8AD27DEE-BDC6-4555-B0D8-35DE2ADFA31B</string>
 		<string>E173E9A5-BB26-4253-8C78-76F11CBFF135</string>
 		<string>6EE80AE0-F0F6-485B-B722-B3B86E72E8FF</string>
+		<string>DADF3CF9-B1F9-4AD3-9C4A-3F996AA03858</string>
 		<string>D7885B58-43D8-47E9-AFD7-93620229B180</string>
+		<string>235AA31C-881D-4F49-8A79-2B249FDA6D00</string>
 		<string>274C9A3F-CC3C-4B99-B539-703A2F5C1E90</string>
 	</array>
 	<key>ProjectItems</key>
@@ -222,6 +227,54 @@
 			<key>UserOverrideItemName</key>
 			<true/>
 		</dict>
+		<key>235AA31C-881D-4F49-8A79-2B249FDA6D00</key>
+		<dict>
+			<key>ItemData</key>
+			<dict>
+				<key>BookmarkData</key>
+				<data>
+				Ym9va+gCAAAAAAQQMAAAADGCAdGq3nOJp58i/0oo2LVz
+				1PXnATgKAsE2hSb3eu3W5AEAAAQAAAADAwAAAAgAKAUA
+				AAABAQAAVXNlcnMAAAAFAAAAAQEAAHJwYWdlAAAABQAA
+				AAEBAABTaXRlcwAAAA8AAAABAQAAd2lraWNpdGUtc2Vh
+				cmNoAAkAAAABAQAAdXRpbHMucGhwAAAAFAAAAAEGAAAQ
+				AAAAIAAAADAAAABAAAAAWAAAAAgAAAAEAwAAEGcCAAAA
+				AAAIAAAABAMAAIV0DQAAAAAACAAAAAQDAAAEVkwAAAAA
+				AAgAAAAEAwAAmtDBBgMAAAAIAAAABAMAAALlwgYDAAAA
+				FAAAAAEGAACIAAAAmAAAAKgAAAC4AAAAyAAAAAgAAAAA
+				BAAAQcJxTMvuEXkYAAAAAQIAAAEAAAAAAAAADwAAAAAA
+				AAAAAAAAAAAAAAgAAAAEAwAAAwAAAAAAAAAEAAAAAwMA
+				APUBAAAIAAAAAQkAAGZpbGU6Ly8vDAAAAAEBAABNYWNp
+				bnRvc2ggSEQIAAAABAMAAADgBANpAAAACAAAAAAEAABB
+				vt1dYgAAACQAAAABAQAAMjVFNDI4NkQtNzEyQy0zODk5
+				LUI0M0YtNUQzRjZBOEJEMTIxGAAAAAECAACBAAAAAQAA
+				AO8TAAABAAAAAAAAAAAAAAABAAAAAQEAAC8AAAAAAAAA
+				AQUAAMwAAAD+////AQAAAAAAAAAQAAAABBAAAGwAAAAA
+				AAAABRAAANgAAAAAAAAAEBAAAAQBAAAAAAAAQBAAAPQA
+				AAAAAAAAAiAAANABAAAAAAAABSAAAEABAAAAAAAAECAA
+				AFABAAAAAAAAESAAAIQBAAAAAAAAEiAAAGQBAAAAAAAA
+				EyAAAHQBAAAAAAAAICAAALABAAAAAAAAMCAAANwBAAAA
+				AAAAAcAAACQBAAAAAAAAEcAAACAAAAAAAAAAEsAAADQB
+				AAAAAAAAENAAAAQAAAAAAAAA
+				</data>
+				<key>FileURL</key>
+				<string>file:///Users/rpage/Sites/wikicite-search/utils.php</string>
+				<key>HasSecurityScope</key>
+				<true/>
+				<key>RelativePath</key>
+				<string>./utils.php</string>
+				<key>TypeID</key>
+				<string>_CFileLocator</string>
+				<key>Version</key>
+				<integer>1</integer>
+			</dict>
+			<key>ItemName</key>
+			<string>utils.php</string>
+			<key>ItemType</key>
+			<string>FileReference</string>
+			<key>UserOverrideItemName</key>
+			<true/>
+		</dict>
 		<key>274C9A3F-CC3C-4B99-B539-703A2F5C1E90</key>
 		<dict>
 			<key>ItemData</key>
@@ -255,11 +308,11 @@
 				AAAAAOgBAIAMAgAAAAAAAA==
 				</data>
 				<key>FileURL</key>
-				<string>file:///Users/rpage/Sites/wikicite-search/fetch-raw.php</string>
+				<string>file:///Users/rpage/Sites/wikicite-search/wikidata.php</string>
 				<key>HasSecurityScope</key>
 				<true/>
 				<key>RelativePath</key>
-				<string>./fetch-raw.php</string>
+				<string>./wikidata.php</string>
 				<key>TypeID</key>
 				<string>_CFileLocator</string>
 				<key>Version</key>
@@ -566,6 +619,54 @@
 			<key>UserOverrideItemName</key>
 			<true/>
 		</dict>
+		<key>5C967865-3488-4239-B262-255F9670348D</key>
+		<dict>
+			<key>ItemData</key>
+			<dict>
+				<key>BookmarkData</key>
+				<data>
+				Ym9va+QCAAAAAAQQMAAAAOQZkotci2EJ4CmG2sPH/s37
+				Sbt51YYrsUBsmgNcP9IN4AEAAAQAAAADAwAAAAgAKAUA
+				AAABAQAAVXNlcnMAAAAFAAAAAQEAAHJwYWdlAAAABQAA
+				AAEBAABTaXRlcwAAAA8AAAABAQAAd2lraWNpdGUtc2Vh
+				cmNoAAcAAAABAQAAYXBpLnBocAAUAAAAAQYAABAAAAAg
+				AAAAMAAAAEAAAABYAAAACAAAAAQDAAAQZwIAAAAAAAgA
+				AAAEAwAAhXQNAAAAAAAIAAAABAMAAARWTAAAAAAACAAA
+				AAQDAACa0MEGAwAAAAgAAAAEAwAAbH9aBwMAAAAUAAAA
+				AQYAAIQAAACUAAAApAAAALQAAADEAAAACAAAAAAEAABB
+				wxeBljW+iRgAAAABAgAAAQAAAAAAAAAPAAAAAAAAAAAA
+				AAAAAAAACAAAAAQDAAADAAAAAAAAAAQAAAADAwAA9QEA
+				AAgAAAABCQAAZmlsZTovLy8MAAAAAQEAAE1hY2ludG9z
+				aCBIRAgAAAAEAwAAAOAEA2kAAAAIAAAAAAQAAEG+3V1i
+				AAAAJAAAAAEBAAAyNUU0Mjg2RC03MTJDLTM4OTktQjQz
+				Ri01RDNGNkE4QkQxMjEYAAAAAQIAAIEAAAABAAAA7xMA
+				AAEAAAAAAAAAAAAAAAEAAAABAQAALwAAAAAAAAABBQAA
+				zAAAAP7///8BAAAAAAAAABAAAAAEEAAAaAAAAAAAAAAF
+				EAAA1AAAAAAAAAAQEAAAAAEAAAAAAABAEAAA8AAAAAAA
+				AAACIAAAzAEAAAAAAAAFIAAAPAEAAAAAAAAQIAAATAEA
+				AAAAAAARIAAAgAEAAAAAAAASIAAAYAEAAAAAAAATIAAA
+				cAEAAAAAAAAgIAAArAEAAAAAAAAwIAAA2AEAAAAAAAAB
+				wAAAIAEAAAAAAAARwAAAIAAAAAAAAAASwAAAMAEAAAAA
+				AAAQ0AAABAAAAAAAAAA=
+				</data>
+				<key>FileURL</key>
+				<string>file:///Users/rpage/Sites/wikicite-search/api.php</string>
+				<key>HasSecurityScope</key>
+				<true/>
+				<key>RelativePath</key>
+				<string>./api.php</string>
+				<key>TypeID</key>
+				<string>_CFileLocator</string>
+				<key>Version</key>
+				<integer>1</integer>
+			</dict>
+			<key>ItemName</key>
+			<string>api.php</string>
+			<key>ItemType</key>
+			<string>FileReference</string>
+			<key>UserOverrideItemName</key>
+			<true/>
+		</dict>
 		<key>6111F65B-B373-46D1-8C00-C604FCD885CC</key>
 		<dict>
 			<key>ItemData</key>
@@ -697,11 +798,11 @@
 				AAAAAOgBAIAMAgAAAAAAAA==
 				</data>
 				<key>FileURL</key>
-				<string>file:///Users/rpage/Sites/wikicite-search/search-new.php</string>
+				<string>file:///Users/rpage/Sites/wikicite-search/search.php</string>
 				<key>HasSecurityScope</key>
 				<true/>
 				<key>RelativePath</key>
-				<string>./search-new.php</string>
+				<string>./search.php</string>
 				<key>TypeID</key>
 				<string>_CFileLocator</string>
 				<key>Version</key>
@@ -805,6 +906,56 @@
 			</dict>
 			<key>ItemName</key>
 			<string>lib.php</string>
+			<key>ItemType</key>
+			<string>FileReference</string>
+			<key>UserOverrideItemName</key>
+			<true/>
+		</dict>
+		<key>94F239FF-0829-4A9B-AAEC-C05E2DBE34D2</key>
+		<dict>
+			<key>ItemData</key>
+			<dict>
+				<key>BookmarkData</key>
+				<data>
+				Ym9vayADAAAAAAQQMAAAAPsxJJ2hEyBU1LoLcW3ZSZcC
+				pKJQO/rDQ1c+5R70gRZjEAIAAAQAAAADAwAAAAgAKAUA
+				AAABAQAAVXNlcnMAAAAFAAAAAQEAAHJwYWdlAAAABQAA
+				AAEBAABTaXRlcwAAAA8AAAABAQAAd2lraWNpdGUtc2Vh
+				cmNoAAcAAAABAQAAZW52LnBocAAUAAAAAQYAABAAAAAg
+				AAAAMAAAAEAAAABYAAAACAAAAAQDAAAQZwIAAAAAAAgA
+				AAAEAwAAhXQNAAAAAAAIAAAABAMAAARWTAAAAAAACAAA
+				AAQDAACa0MEGAwAAAAgAAAAEAwAARmdaBwMAAAAUAAAA
+				AQYAAIQAAACUAAAApAAAALQAAADEAAAACAAAAAAEAABB
+				wamqe0QiABgAAAABAgAAAQAAAAAAAAAPAAAAAAAAAAAA
+				AAAAAAAACAAAAAQDAAADAAAAAAAAAAQAAAADAwAA9QEA
+				AAgAAAABCQAAZmlsZTovLy8MAAAAAQEAAE1hY2ludG9z
+				aCBIRAgAAAAEAwAAAOAEA2kAAAAIAAAAAAQAAEG+3V1i
+				AAAAJAAAAAEBAAAyNUU0Mjg2RC03MTJDLTM4OTktQjQz
+				Ri01RDNGNkE4QkQxMjEYAAAAAQIAAIEAAAABAAAA7xMA
+				AAEAAAAAAAAAAAAAAAEAAAABAQAALwAAAAAAAAABBQAA
+				GgAAAAEBAABOU1VSTERvY3VtZW50SWRlbnRpZmllcktl
+				eQAABAAAAAMDAAC6pQEA2AAAAP7///8BAAAAAAAAABEA
+				AAAEEAAAaAAAAAAAAAAFEAAA1AAAAAAAAAAQEAAAAAEA
+				AAAAAABAEAAA8AAAAAAAAAACIAAAzAEAAAAAAAAFIAAA
+				PAEAAAAAAAAQIAAATAEAAAAAAAARIAAAgAEAAAAAAAAS
+				IAAAYAEAAAAAAAATIAAAcAEAAAAAAAAgIAAArAEAAAAA
+				AAAwIAAA2AEAAAAAAAABwAAAIAEAAAAAAAARwAAAIAAA
+				AAAAAAASwAAAMAEAAAAAAAAQ0AAABAAAAAAAAADgAQCA
+				BAIAAAAAAAA=
+				</data>
+				<key>FileURL</key>
+				<string>file:///Users/rpage/Sites/wikicite-search/env.php</string>
+				<key>HasSecurityScope</key>
+				<true/>
+				<key>RelativePath</key>
+				<string>./env.php</string>
+				<key>TypeID</key>
+				<string>_CFileLocator</string>
+				<key>Version</key>
+				<integer>1</integer>
+			</dict>
+			<key>ItemName</key>
+			<string>env.php</string>
 			<key>ItemType</key>
 			<string>FileReference</string>
 			<key>UserOverrideItemName</key>
@@ -989,11 +1140,11 @@
 				AAAAAOgBAIAMAgAAAAAAAA==
 				</data>
 				<key>FileURL</key>
-				<string>file:///Users/rpage/Sites/wikicite-search/upload-one.php</string>
+				<string>file:///Users/rpage/Sites/wikicite-search/junk/upload-one.php</string>
 				<key>HasSecurityScope</key>
 				<true/>
 				<key>RelativePath</key>
-				<string>./upload-one.php</string>
+				<string>./junk/upload-one.php</string>
 				<key>TypeID</key>
 				<string>_CFileLocator</string>
 				<key>Version</key>
@@ -1001,6 +1152,56 @@
 			</dict>
 			<key>ItemName</key>
 			<string>upload-one.php</string>
+			<key>ItemType</key>
+			<string>FileReference</string>
+			<key>UserOverrideItemName</key>
+			<true/>
+		</dict>
+		<key>DADF3CF9-B1F9-4AD3-9C4A-3F996AA03858</key>
+		<dict>
+			<key>ItemData</key>
+			<dict>
+				<key>BookmarkData</key>
+				<data>
+				Ym9vayADAAAAAAQQMAAAAP1BDPoisEEtFzB8D+Rel/ua
+				Hs7ecgXMlXYcl4x/eJlhEAIAAAQAAAADAwAAAAgAKAUA
+				AAABAQAAVXNlcnMAAAAFAAAAAQEAAHJwYWdlAAAABQAA
+				AAEBAABTaXRlcwAAAA8AAAABAQAAd2lraWNpdGUtc2Vh
+				cmNoAAgAAAABAQAAdGVzdC50eHQUAAAAAQYAABAAAAAg
+				AAAAMAAAAEAAAABYAAAACAAAAAQDAAAQZwIAAAAAAAgA
+				AAAEAwAAhXQNAAAAAAAIAAAABAMAAARWTAAAAAAACAAA
+				AAQDAACa0MEGAwAAAAgAAAAEAwAAi2laBwMAAAAUAAAA
+				AQYAAIQAAACUAAAApAAAALQAAADEAAAACAAAAAAEAABB
+				w0pE1MLYzRgAAAABAgAAAQAAAAAAAAAPAAAAAAAAAAAA
+				AAAAAAAACAAAAAQDAAADAAAAAAAAAAQAAAADAwAA9QEA
+				AAgAAAABCQAAZmlsZTovLy8MAAAAAQEAAE1hY2ludG9z
+				aCBIRAgAAAAEAwAAAOAEA2kAAAAIAAAAAAQAAEG+3V1i
+				AAAAJAAAAAEBAAAyNUU0Mjg2RC03MTJDLTM4OTktQjQz
+				Ri01RDNGNkE4QkQxMjEYAAAAAQIAAIEAAAABAAAA7xMA
+				AAEAAAAAAAAAAAAAAAEAAAABAQAALwAAAAAAAAABBQAA
+				GgAAAAEBAABOU1VSTERvY3VtZW50SWRlbnRpZmllcktl
+				eQAABAAAAAMDAAC7pQEA2AAAAP7///8BAAAAAAAAABEA
+				AAAEEAAAaAAAAAAAAAAFEAAA1AAAAAAAAAAQEAAAAAEA
+				AAAAAABAEAAA8AAAAAAAAAACIAAAzAEAAAAAAAAFIAAA
+				PAEAAAAAAAAQIAAATAEAAAAAAAARIAAAgAEAAAAAAAAS
+				IAAAYAEAAAAAAAATIAAAcAEAAAAAAAAgIAAArAEAAAAA
+				AAAwIAAA2AEAAAAAAAABwAAAIAEAAAAAAAARwAAAIAAA
+				AAAAAAASwAAAMAEAAAAAAAAQ0AAABAAAAAAAAADgAQCA
+				BAIAAAAAAAA=
+				</data>
+				<key>FileURL</key>
+				<string>file:///Users/rpage/Sites/wikicite-search/test.txt</string>
+				<key>HasSecurityScope</key>
+				<true/>
+				<key>RelativePath</key>
+				<string>./test.txt</string>
+				<key>TypeID</key>
+				<string>_CFileLocator</string>
+				<key>Version</key>
+				<integer>1</integer>
+			</dict>
+			<key>ItemName</key>
+			<string>test.txt</string>
 			<key>ItemType</key>
 			<string>FileReference</string>
 			<key>UserOverrideItemName</key>
@@ -1051,6 +1252,56 @@
 			</dict>
 			<key>ItemName</key>
 			<string>reconciliation-client.php</string>
+			<key>ItemType</key>
+			<string>FileReference</string>
+			<key>UserOverrideItemName</key>
+			<true/>
+		</dict>
+		<key>F3B475F3-3EDD-4BD8-AC51-EE990BFF79DF</key>
+		<dict>
+			<key>ItemData</key>
+			<dict>
+				<key>BookmarkData</key>
+				<data>
+				Ym9vayQDAAAAAAQQMAAAAAgAT2uwVgAm88SBfYtaUO9W
+				ZISv0XsB8okw/9tQER3BFAIAAAQAAAADAwAAAAgAKAUA
+				AAABAQAAVXNlcnMAAAAFAAAAAQEAAHJwYWdlAAAABQAA
+				AAEBAABTaXRlcwAAAA8AAAABAQAAd2lraWNpdGUtc2Vh
+				cmNoAAkAAAABAQAAZXh0cmEudHh0AAAAFAAAAAEGAAAQ
+				AAAAIAAAADAAAABAAAAAWAAAAAgAAAAEAwAAEGcCAAAA
+				AAAIAAAABAMAAIV0DQAAAAAACAAAAAQDAAAEVkwAAAAA
+				AAgAAAAEAwAAmtDBBgMAAAAIAAAABAMAACtbxAYDAAAA
+				FAAAAAEGAACIAAAAmAAAAKgAAAC4AAAAyAAAAAgAAAAA
+				BAAAQcMp5EU8cG8YAAAAAQIAAAEAAAAAAAAADwAAAAAA
+				AAAAAAAAAAAAAAgAAAAEAwAAAwAAAAAAAAAEAAAAAwMA
+				APUBAAAIAAAAAQkAAGZpbGU6Ly8vDAAAAAEBAABNYWNp
+				bnRvc2ggSEQIAAAABAMAAADgBANpAAAACAAAAAAEAABB
+				vt1dYgAAACQAAAABAQAAMjVFNDI4NkQtNzEyQy0zODk5
+				LUI0M0YtNUQzRjZBOEJEMTIxGAAAAAECAACBAAAAAQAA
+				AO8TAAABAAAAAAAAAAAAAAABAAAAAQEAAC8AAAAAAAAA
+				AQUAABoAAAABAQAATlNVUkxEb2N1bWVudElkZW50aWZp
+				ZXJLZXkAAAQAAAADAwAA+KMBANgAAAD+////AQAAAAAA
+				AAARAAAABBAAAGwAAAAAAAAABRAAANgAAAAAAAAAEBAA
+				AAQBAAAAAAAAQBAAAPQAAAAAAAAAAiAAANABAAAAAAAA
+				BSAAAEABAAAAAAAAECAAAFABAAAAAAAAESAAAIQBAAAA
+				AAAAEiAAAGQBAAAAAAAAEyAAAHQBAAAAAAAAICAAALAB
+				AAAAAAAAMCAAANwBAAAAAAAAAcAAACQBAAAAAAAAEcAA
+				ACAAAAAAAAAAEsAAADQBAAAAAAAAENAAAAQAAAAAAAAA
+				5AEAgAgCAAAAAAAA
+				</data>
+				<key>FileURL</key>
+				<string>file:///Users/rpage/Sites/wikicite-search/extra.txt</string>
+				<key>HasSecurityScope</key>
+				<true/>
+				<key>RelativePath</key>
+				<string>./extra.txt</string>
+				<key>TypeID</key>
+				<string>_CFileLocator</string>
+				<key>Version</key>
+				<integer>1</integer>
+			</dict>
+			<key>ItemName</key>
+			<string>extra.txt</string>
 			<key>ItemType</key>
 			<string>FileReference</string>
 			<key>UserOverrideItemName</key>

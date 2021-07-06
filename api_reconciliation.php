@@ -57,7 +57,7 @@ class BibFinderService extends ReconciliationService
 		
 		$search_result = do_search($text);
 	
-		//print_r($search_result);
+		// print_r($search_result);
 
 		$hits = array();
 

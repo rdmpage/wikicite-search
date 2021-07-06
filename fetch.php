@@ -9,9 +9,17 @@ require_once(dirname(__FILE__) . '/wikidata.php');
 $filename = "ids.txt";
 //$filename = "cockroaches.txt";
 //$filename = "test.txt";
-$filename = "extra.txt";
+
 $filename = "Araneae.txt";
 $filename = "ion.txt";
+$filename = "if.txt";
+$filename = "extra.txt";
+//$filename = '0524-4994.txt';
+//$filename = "ipni.txt";
+//$filename = "handle.txt";
+//$filename = "more.txt";
+//$filename = "have.txt";
+$filename = "test.txt";
 
 $count = 1;
 
