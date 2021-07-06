@@ -187,7 +187,7 @@ if ($result)
 			}
 			else
 			{
-				echo '<img src="images/15519179861536080156-128.png" height="100">';						
+				echo '<img src="images/1126709.png" height="100">';						
 			}
 			echo '</a>';
 		}
