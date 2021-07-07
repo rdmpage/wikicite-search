@@ -279,8 +279,26 @@ if ($result)
 
 	}
 }
+else
+{
+?>
+
+<div>
+<h1>Wikicite Search: a bibliographic search engine for Wikidata</h1>
+
+<p>Wikicite Search is a search engine for scholarly articles and books in <a href="https://www.wikidata.org">Wikidata</a>.
+At present it's focus is on the taxonomic literature, that is, papers that describe new species. 
+It only has access to a small subset of literature added by the <a href="http://wikicite.org">WikiCite</a>
+project, but this will grow over time. The initial goal is to provide tools to <a href="?q=Boomsma">search</a>
+, <a href="./match.html">match</a>, and display articles in a variety of formats such as <a href="./api.php?id=Q96108337">CSL-JSON</a>
+and <a href="./api.php?id=Q96108337&format=jsonld">JSON-LD</a>. Where possible access to PDFs for articles is provided by
+the <a href="https://archive.org">Internet Archive</a> or the <a href="https://web.archive.org">Wayback Machine</a>.
+</p>
+</div>
 
 
+<?php
+}
 ?>				
 					
 				</div>
