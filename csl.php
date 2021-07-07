@@ -500,21 +500,38 @@ function wikidata_to_csl($id)
 				
 				if ($value != '')
 				{
-					// thumbnailUrl = "//archive.org/download/" + id + "/page/cover_thumb.jpg";
-
-
-					$link = new stdclass;
-					$link->URL = 'https://archive.org/download/' . $value . '/' . $value . '.pdf';
-					$link->{'content-type'} = 'application/pdf';
+					// We can't rely on simple rules as some archives (e.g. PubMed Central)
+					// have their own rules for files
 					
-					// my hack
-					$link->thumbnailUrl = 'https://archive.org/download/' . $value . '/page/cover_thumb.jpg';
+					$ia_url = 'https://archive.org/metadata/' . $value;
 					
-					if (!isset($obj->link))
+					$ia_json = get($ia_url);
+					
+					$ia_obj = json_decode($ia_json);
+					if ($ia_obj)
 					{
-						$obj->link = array();
+						$pdf_name = '';
+						foreach ($ia_obj->files as $file)
+						{
+							if ($file->format == 'Text PDF')
+							{
+								// PDF
+								$link = new stdclass;
+								$link->URL = 'https://archive.org/download/' . $value . '/' . $file->name;
+								$link->{'content-type'} = 'application/pdf';
+								
+								// guess the thumbnail
+								$link->thumbnailUrl = 'https://archive.org/download/' . $value . '/page/cover_thumb.jpg';
+					
+								if (!isset($obj->link))
+								{
+									$obj->link = array();
+								}
+								$obj->link[] = $link;
+
+							}						
+						}
 					}
-					$obj->link[] = $link;
 				}
 				break;
 				
