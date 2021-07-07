@@ -173,7 +173,7 @@ if ($result)
 
 	foreach ($result->{'@graph'}[0]->dataFeedElement as $item)
 	{
-		echo '<div class="row" style="margin-bottom:2em;">';
+		echo '<div class="row" style="margin-bottom:3em;">';
 		
 		echo '<div class="col s12 m2 hide-on-small-only">';
 		
@@ -187,7 +187,7 @@ if ($result)
 			}
 			else
 			{
-				echo '<img src="images/1126709.png" height="100">';						
+				echo '<img style="opacity:0.5" src="images/1126709.png" height="100">';						
 			}
 			echo '</a>';
 		}
@@ -218,7 +218,7 @@ if ($result)
 					
 		}
 		
-		echo '<div style="font-size:1.5em;">'; 
+		echo '<div style="font-size:1.5em;font-weight:bold;">'; 
 		echo strip_tags($name);
 		echo '</div>';
 		
@@ -261,6 +261,10 @@ if ($result)
 			echo '<a class="btn-small" href="https://www.jstor.org/stable/' . $item->jstor .'" target="_new">JSTOR:' . $item->jstor . '</a>';
 		}	
 		
+		if (isset($item->contentUrl))
+		{
+			echo '<a class="btn-small" href="pdfproxy.php?url=' . urlencode($item->contentUrl[0]) . '" target="_new">PDF</a>';
+		}		
 		
 		echo '</div>';
 		
