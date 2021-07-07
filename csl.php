@@ -255,7 +255,10 @@ function get_author_info($id, $order, &$obj)
 		
 		switch ($k)
 		{
-			
+			case 'P18':
+				$author->thumbnailUrl = 'https://commons.wikimedia.org/w/thumb.php?f=' . literal_value_simple($claim) . '&w=200';
+				break;
+						
 			case 'P496':
 				$author->ORCID = 'https://orcid.org/' . literal_value_simple($claim);
 				break;	

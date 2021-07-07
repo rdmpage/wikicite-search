@@ -8,6 +8,7 @@ use Seboettg\CiteProc\StyleSheet;
 use Seboettg\CiteProc\CiteProc;
 
 require_once (dirname(__FILE__) . '/config.inc.php');
+require_once (dirname(__FILE__) . '/csl_to_rdf.php');
 require_once (dirname(__FILE__) . '/elastic.php');
 require_once (dirname(__FILE__) . '/search.php');
 
@@ -41,27 +42,17 @@ function display_one ($id, $format= '', $callback = '')
 
 			switch ($format)
 			{
-			/*
 				case 'ntriples':
-					$output = get_work($id, 'ntriples');
+					$output = csl_to_rdf($csl, 'ntriples');
 					break;
 				
-				case 'jsonld':
-			
-					$output = get_work_jsonld_framed($id);
-				
+				case 'jsonld':			
+					$output = csl_to_rdf($csl, 'jsonld');				
 					$mime = "application/json";	
 					break;
-			*/
-				
-					/*
+					
 				case 'text':
-				case 'html':
-					// convert to object
-					$json = get_work_jsonld_framed($id);
-					$obj = json_decode($json);
-					$csl = schema_to_csl($obj);
-				
+				case 'html':				
 					$style_sheet = StyleSheet::loadStyleSheet($style);
 					$citeProc = new CiteProc($style_sheet);
 					$html = $citeProc->render(array($csl), "bibliography");
@@ -80,7 +71,7 @@ function display_one ($id, $format= '', $callback = '')
 						$mime = "text/plain";
 					}
 					break;
-					*/
+					
 			
 				case 'citeproc':
 				case 'csl':
