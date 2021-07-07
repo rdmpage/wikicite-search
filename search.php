@@ -70,40 +70,76 @@ function add_property_value (&$item, $key, $propertyName, $propertyValue)
 function do_search($q, $limit = 5)
 {
 	global $elastic;
-
-	$json = '{
-	"size":20,
-		"query": {
-		   "multi_match" : {
-		  "query": "<QUERY>",
-		  "fields":["search_data.fulltext", "search_data.fulltext_boosted^4"] 
+	
+	// searching by ID or by term?
+	
+	if (preg_match('/Q\d+/', $q))
+	{
+		// Retrieve on item and mimic search result so that we cna use the same formatting code
+		
+		$response = $elastic->send('GET',  '_doc/' . $q);	
+		$response_obj = json_decode($response);
+		
+		$response_obj->_score = 100;
+		
+		//print_r($response_obj);
+		
+		$obj = new stdclass;
+		
+		$obj->took = 0;
+		
+		$obj->hits = new stdclass;
+		$obj->hits->hits = array();
+		
+		$obj->hits->total = new stdclass;		
+		if ($response_obj->found)
+		{
+			$obj->hits->total->value = 1;			
+			$obj->hits->hits[] = $response_obj;
 		}
-	},
+		else
+		{
+			$obj->hits->total->value = 0;	
+		}
+	
+	}
+	else
+	{
+		// text search
+		$json = '{
+		"size":20,
+			"query": {
+			   "multi_match" : {
+			  "query": "<QUERY>",
+			  "fields":["search_data.fulltext", "search_data.fulltext_boosted^4"] 
+			}
+		},
 
-	"highlight": {
-		  "pre_tags": [
-			 "<mark>"
-		  ],
-		  "post_tags": [
-			 "<\/mark>"
-		  ],
-		  "fields": {
-			 "search_data.fulltext": {},
-			 "search_data.fulltext_boosted": {}
-		  }
-	   }
+		"highlight": {
+			  "pre_tags": [
+				 "<mark>"
+			  ],
+			  "post_tags": [
+				 "<\/mark>"
+			  ],
+			  "fields": {
+				 "search_data.fulltext": {},
+				 "search_data.fulltext_boosted": {}
+			  }
+		   }
 
-	}';
+		}';
 
-	$json = str_replace('<QUERY>', $q, $json);
-	//$json = str_replace('<SIZE>', $limit, $json);
+		$json = str_replace('<QUERY>', $q, $json);
+		//$json = str_replace('<SIZE>', $limit, $json);
 
-	$response = $elastic->send('POST',  '_search?pretty', $json);					
+		$response = $elastic->send('POST',  '_search?pretty', $json);					
 
-	// debugging
-	//echo $response;
+		// debugging
+		//echo $response;
 
-	$obj = json_decode($response);
+		$obj = json_decode($response);
+	}
 
 	// process and convert to RDF
 
@@ -184,7 +220,10 @@ function do_search($q, $limit = 5)
 				}
 			
 				// highlight
-				$item->description = join(' … ', $hit->highlight->{'search_data.fulltext'});
+				if (isset($hit->highlight))
+				{
+					$item->description = join(' … ', $hit->highlight->{'search_data.fulltext'});
+				}
 				
 				// bibliographic string
 				$item->bibliographicCitation = $hit->_source->search_data->bibliographicCitation;
