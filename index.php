@@ -223,9 +223,12 @@ if ($result)
 		echo '</div>';
 		
 		// highlights
-		echo '<div>';
-		echo force_balance_tags ($item->description);
-		echo '</div>';
+		if (isset($item->description))
+		{
+			echo '<div>';
+			echo force_balance_tags ($item->description);
+			echo '</div>';
+		}
 		
 		
 		// citation
@@ -288,13 +291,14 @@ if ($result)
 			<div class="container">
             	<div class="row">
             	<div class="divider"></div>
-            		<a href=".">WikiCite Search</a> is a project by <a href="https://twitter.com/rdmpage">Rod Page</a>. 
-            		It's goal is to make discoverable articles in <a href="https://www.wikidata.org/">Wikidata</a>.
+            		<a href=".">WikiCite Search</a> is a project by <a href="https://twitter.com/rdmpage">Rod Page</a> 
+            		to provide a bibliographic search engine for <a href="https://www.wikidata.org/">Wikidata</a>. 
+            		See also the the <a href="./match.html">Match references</a> reconciliation service.
+            		
             	</div>
             </div>
-			
-		
 		</footer>
+		
 	</body>
 </html>
 
