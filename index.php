@@ -175,7 +175,7 @@ if ($result)
 	{
 		echo '<div class="row" style="margin-bottom:3em;">';
 		
-		echo '<div class="col s12 m2 hide-on-small-only">';
+		echo '<div class="col s12 m2 hide-on-small-only" style="text-align:center;">';
 		
 		if (isset($item->contentUrl))
 		{
@@ -183,7 +183,7 @@ if ($result)
 			
 			if (isset($item->thumbnailUrl))
 			{
-				echo '<img  class="z-depth-2" src="https://aipbvczbup.cloudimg.io/s/height/100/' . $item->thumbnailUrl . '" height="100" style="box-shadow:0 1px 3px rgba(0,0,0,0.5)">';					
+				echo '<img class="z-depth-2" src="https://aipbvczbup.cloudimg.io/s/height/100/' . $item->thumbnailUrl . '" height="100" style="box-shadow:0 1px 3px rgba(0,0,0,0.5)">';					
 			}
 			else
 			{
