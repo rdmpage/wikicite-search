@@ -376,13 +376,14 @@ function upload ($csl)
 
 	$doc = csl_to_elastic($csl);
 
-	print_r($doc);
+	//print_r($doc);
 	//print_r($csl);
 	
 	$elastic_doc = new stdclass;
 	$elastic_doc->doc = $doc;
 	$elastic_doc->doc_as_upsert = true;
-	$elastic->send('POST',  '_doc/' . urlencode($elastic_doc->doc->id). '/_update', json_encode($elastic_doc));					
+	$response = $elastic->send('POST',  '_doc/' . urlencode($elastic_doc->doc->id). '/_update', json_encode($elastic_doc));					
+	echo $response;
 }
 
 
