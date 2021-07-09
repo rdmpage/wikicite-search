@@ -35,8 +35,7 @@ while (!feof($file_handle))
 	{
 
 		echo "$id\n";
-	
-		
+			
 		fetch_one($id, $force);
 	
 		// Give server a break every 10 items
