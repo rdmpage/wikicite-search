@@ -319,7 +319,7 @@ function wikidata_to_csl($id)
 				
 				if ($type == '')
 				{
-					if (in_array('Q13442814', $instances))
+					if (in_array('Q13442814', $instances)) // scholarly article
 					{
 						$type = 'article-journal';
 					}
@@ -327,42 +327,42 @@ function wikidata_to_csl($id)
 				if ($type == '')
 				{
 
-					if (in_array('Q18918145', $instances))
+					if (in_array('Q18918145', $instances)) // academic journal article
 					{
 						$type = 'article-journal';
 					}
 				}
 				if ($type == '')
 				{
-					if (in_array('Q191067', $instances))
+					if (in_array('Q191067', $instances)) // article
 					{
 						$type = 'article-journal';
 					}
 				}
 				if ($type == '')
 				{
-					if (in_array('Q47461344', $instances))
+					if (in_array('Q47461344', $instances)) // written work
 					{
 						$type = 'book';
 					}
 				}
 				if ($type == '')
 				{
-					if (in_array('Q571', $instances))
+					if (in_array('Q571', $instances)) // book
 					{
 						$type = 'book';
 					}
 				}
 				if ($type == '')
 				{					
-					if (in_array('Q3331189', $instances))
+					if (in_array('Q3331189', $instances)) // version, edition, or translation
 					{
 						$type = 'book';
 					}
 				}
 				if ($type == '')
 				{
-					if (in_array('Q1980247', $instances))
+					if (in_array('Q1980247', $instances)) // chapter
 					{
 						$type = 'chapter';
 					}
@@ -370,7 +370,7 @@ function wikidata_to_csl($id)
 
 				if ($type == '')
 				{
-					if (in_array('Q1266946', $instances))
+					if (in_array('Q1266946', $instances)) // thesis
 					{
 						$type = 'thesis';
 					}
@@ -378,7 +378,7 @@ function wikidata_to_csl($id)
 
 				if ($type == '')
 				{
-					if (in_array('Q187685', $instances))
+					if (in_array('Q187685', $instances)) // doctoral thesis
 					{
 						$type = 'thesis';
 					}
@@ -386,8 +386,8 @@ function wikidata_to_csl($id)
 				
 				if ($type == '')
 				{
-					// assume it's an article for now
-					$type = 'article-journal';
+					// not somthing we want
+					return null;
 				}
 				
 				$obj->type = $type;
