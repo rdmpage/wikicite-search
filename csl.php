@@ -386,6 +386,15 @@ function wikidata_to_csl($id)
 				
 				if ($type == '')
 				{
+					if (in_array('Q732577', $instances)) // publication
+					{
+						$type = 'thesis';
+					}
+				}
+				
+				
+				if ($type == '')
+				{
 					// not somthing we want
 					return null;
 				}
