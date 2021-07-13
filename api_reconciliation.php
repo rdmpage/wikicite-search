@@ -54,6 +54,7 @@ class BibFinderService extends ReconciliationService
 	{
 		global $config;
 		
+		$text = strip_tags($text);
 		
 		$search_result = do_search($text);
 	
