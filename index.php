@@ -266,7 +266,7 @@ if ($result)
 		
 		if (isset($item->contentUrl))
 		{
-			echo '<a class="btn-small" href="pdfproxy.php?url=' . urlencode($item->contentUrl[0]) . '" target="_new">PDF</a>';
+			echo '<a class="btn-small" href="pdfproxy.php?url=' . urlencode($item->contentUrl[0]) . '" target="_new"><i class="material-icons">file_download</i></a>';
 		}		
 		
 		echo '</div>';
