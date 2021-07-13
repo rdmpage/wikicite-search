@@ -129,6 +129,10 @@ function do_search($q, $limit = 5)
 		   }
 
 		}';
+		
+		// clean search text
+		
+		$q = strip_tags($q);
 
 		$json = str_replace('<QUERY>', $q, $json);
 		//$json = str_replace('<SIZE>', $limit, $json);
@@ -139,6 +143,13 @@ function do_search($q, $limit = 5)
 		//echo $response;
 
 		$obj = json_decode($response);
+		
+		if (0)
+		{
+			echo '<pre>';
+			print_r($obj);
+			echo '</pre>';
+		}
 	}
 
 	// process and convert to RDF
