@@ -47,13 +47,14 @@ function literal_value_multilingual($obj)
 }
 
 //----------------------------------------------------------------------------------------
+// Get just one date
 function date_value($obj)
 {
 	$result = array();
 	
 	foreach ($obj as $k => $v)
 	{
-		if ($v->rank == 'normal')
+		if (($v->rank == 'normal') && (count($result) == 0))
 		{
 			$value = $v->mainsnak->datavalue->value;
 			
@@ -388,7 +389,7 @@ function wikidata_to_csl($id)
 				{
 					if (in_array('Q732577', $instances)) // publication
 					{
-						$type = 'thesis';
+						$type = 'book';
 					}
 				}
 				
@@ -703,6 +704,8 @@ if (0)
 	$id = 'Q91587697';
 	$id = 'Q106929660';
 	$id = 'Q106968114';
+	
+	$id = 'Q29031267';
 	
 	$csl = wikidata_to_csl($id);
 	
