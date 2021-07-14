@@ -65,6 +65,7 @@ function add_property_value (&$item, $key, $propertyName, $propertyValue)
 
 
 
+
 //----------------------------------------------------------------------------------------
 
 function do_search($q, $limit = 5)
@@ -225,15 +226,61 @@ function do_search($q, $limit = 5)
 				
 				$item->resultScore = $hit->_score;
 				
+				$item->name = "";
+				
 				if (isset($hit->_source->search_display->name))
 				{
 					$item->name = $hit->_source->search_display->name;				
 				}
+				
+				
+			
+				$highlight_tags = array();
 			
 				// highlight
 				if (isset($hit->highlight))
 				{
 					$item->description = join(' … ', $hit->highlight->{'search_data.fulltext'});
+					
+					// Manually highlight terms in publication title
+					if (isset($hit->highlight->{'search_data.fulltext_boosted'}))
+					{
+						if (preg_match_all('/(?<=\<mark\>)(?<content>.*?)(?=\<\/mark\>)/', $hit->highlight->{'search_data.fulltext_boosted'}[0], $m))
+						{
+							foreach ($m['content'] as $content)
+							{
+								$highlight_tags[] = $content;							
+							}
+						
+							$highlight_tags = array_unique($highlight_tags);
+						
+							// print_r($highlight_tags);
+						
+							if (isset($item->name))
+							{
+						
+								if (isset($item->name->{'en'}))
+								{
+									$str = $item->name->{'en'};
+								}
+								else
+								{
+									$values = get_object_vars($item->name);
+									reset($values);
+									$first_key = key($values);
+		
+									$str = $item->name->$first_key;
+								}
+							
+								foreach ($highlight_tags as $tag)
+								{
+									$str = preg_replace('/\b(' . $tag . ')\b/u', '<b>$1</b>', $str);
+								}
+						
+								$item->headline = $str;
+							}
+						}
+					}
 				}
 				
 				// bibliographic string

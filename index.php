@@ -68,6 +68,11 @@ body {
 		margin-right:0.5em;
 	}
 		
+		
+	mark {
+		background-color: #FFD479;
+	}
+		
 		</style>
 		
 		<script>
@@ -197,31 +202,37 @@ if ($result)
 		echo '<div class="col s12 m10">';
 
 		// name
-		$name = '';
-		
-		if (isset($item->name->{$locale}))
+		if (isset($item->headline))
 		{
-			$name .= $item->name->{$locale};
+			echo '<div style="font-size:1.5em;font-weight:normal;">'; 
+			echo $item->headline;
+			echo '</div>';		
 		}
 		else
 		{
-			// pick one
-			if (isset($item->name))
+			$name = '';
+		
+			if (isset($item->name->{$locale}))
 			{
-				$values = get_object_vars($item->name);
-				reset($values);
-				$first_key = key($values);
-		
-				$name .= $item->name->$first_key;
+				$name = $item->name->{$locale};
 			}
-
-					
+			else
+			{
+				// pick one
+				if (isset($item->name))
+				{
+					$values = get_object_vars($item->name);
+					reset($values);
+					$first_key = key($values);
+		
+					$name = $item->name->$first_key;
+				}
+			}
+		
+			echo '<div style="font-size:1.5em;font-weight:normal;">'; 
+			echo strip_tags($name);
+			echo '</div>';
 		}
-		
-		echo '<div style="font-size:1.5em;font-weight:bold;">'; 
-		echo strip_tags($name);
-		echo '</div>';
-		
 		// highlights
 		if (isset($item->description))
 		{
@@ -311,7 +322,7 @@ the <a href="https://archive.org">Internet Archive</a> or the <a href="https://w
             	<div class="divider"></div>
             		<a href=".">WikiCite Search</a> is a project by <a href="https://twitter.com/rdmpage">Rod Page</a> 
             		to provide a bibliographic search engine for <a href="https://www.wikidata.org/">Wikidata</a>. 
-            		See also the the <a href="./match.html">Match references</a> reconciliation service.
+            		See also the <a href="./match.html">Match references</a> reconciliation service.
             		
             	</div>
             </div>
