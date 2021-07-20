@@ -512,9 +512,52 @@ function wikidata_to_csl($id)
 				$container_id = $mainsnak->datavalue->value->id;			
 				get_container_info($container_id, $obj);			
 				break;
+				
+				
+			// BioStor
+			case 'P5315':
+				$value = literal_value_simple($claim);
+				
+				if ($value != '')
+				{
+					$obj->BIOSTOR = $value;
+								
+					$ia_id = 'biostor-' . $value;
+				
+					// could use simple rule but I don't have all of BioStor in IA yet
+					$ia_url = 'https://archive.org/metadata/' . $ia_id;
+				
+					$ia_json = get($ia_url);
+				
+					$ia_obj = json_decode($ia_json);
+					if ($ia_obj)
+					{
+						$pdf_name = '';
+						foreach ($ia_obj->files as $file)
+						{
+							if ($file->format == 'Text PDF')
+							{
+								// PDF
+								$link = new stdclass;
+								$link->URL = 'https://archive.org/download/' . $ia_id . '/' . $file->name;
+								$link->{'content-type'} = 'application/pdf';
+							
+								// guess the thumbnail
+								$link->thumbnailUrl = 'https://archive.org/download/' . $ia_id . '/page/cover_thumb.jpg';
+				
+								if (!isset($obj->link))
+								{
+									$obj->link = array();
+								}
+								$obj->link[] = $link;
+
+							}						
+						}
+					}					
+				}			
+				break;
 		
-			// PDF
-			
+			// PDF			
 			case 'P724': // Internet Archive
 				$value = literal_value_simple($claim);
 				
@@ -570,10 +613,6 @@ function wikidata_to_csl($id)
 						}
 						$obj->link[] = $link;
 					}
-					
-					
-					
-					
 				}
 				break;
 				
@@ -619,9 +658,7 @@ function wikidata_to_csl($id)
 			default:
 				break;
 		}
-
 	}
-
 
 	// post process
 
