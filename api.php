@@ -111,6 +111,36 @@ function display_search($q, $callback = '')
 
 }
 
+
+//----------------------------------------------------------------------------------------
+// Count number of records
+function display_count ($callback = '')
+{
+	global $elastic;
+
+	$mime = "text/plain";
+	$output = null;
+
+	$json = $elastic->send("GET", "_count");
+	
+	$obj = json_decode($json);
+
+	header("Content-type: " . $mime);
+	
+	if ($callback != '')
+	{
+		echo $callback . '(';
+	}
+
+	echo $json;
+	
+	if ($callback != '')
+	{
+		echo ')';
+	}	
+
+}
+
 //----------------------------------------------------------------------------------------
 function main()
 {
@@ -153,6 +183,16 @@ function main()
 			
 		}
 	}
+	
+	if (!$handled)
+	{
+		if (isset($_GET['count']))
+		{	
+			display_count($callback);			
+			$handled = true;
+		}
+			
+	}			
 	
 	if (!$handled)
 	{
