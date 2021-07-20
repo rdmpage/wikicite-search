@@ -6,6 +6,8 @@
 	<array>
 		<string>6809E09F-1C72-4382-A40A-E9CF90AC896B</string>
 		<string>511125E8-D90A-4DB0-9DEC-C57BE18A3501</string>
+		<string>036A1D5D-6378-4D64-AA0C-DA2C9C885F80</string>
+		<string>4542DE82-1349-4817-84F1-E41830F9E84E</string>
 		<string>5C967865-3488-4239-B262-255F9670348D</string>
 		<string>2DF98F0D-F50B-4D76-BCEA-C2C6B0CC5894</string>
 		<string>A8480C6D-AA56-4A49-9386-FBCBCB59583A</string>
@@ -13,11 +15,13 @@
 		<string>6111F65B-B373-46D1-8C00-C604FCD885CC</string>
 		<string>2CBD8FC9-0D23-43C0-84B7-86B30864BE74</string>
 		<string>4B675C22-BB72-4A0B-9EFF-6A52828A5A95</string>
+		<string>09CD92E9-0E5A-40AC-A4E2-2F2125F934B4</string>
 		<string>48E0FBE0-734F-4477-B253-89B2BDA3A409</string>
 		<string>0ADD5A2C-37A8-4E98-B367-8324740B8BEE</string>
 		<string>94F239FF-0829-4A9B-AAEC-C05E2DBE34D2</string>
 		<string>F3B475F3-3EDD-4BD8-AC51-EE990BFF79DF</string>
 		<string>A6E4A5E1-2C7A-4E9E-971B-71F06D69E7EE</string>
+		<string>E6AC90E6-17E8-47B9-9FE3-7C14D3EEAFAE</string>
 		<string>00E7A0BB-3366-43B9-A268-BF0D55F16431</string>
 		<string>4DE2D8DF-2F0E-4AE6-88C4-323EC068AFD8</string>
 		<string>91E77EB6-6EE6-470A-A474-D638F7473EB0</string>
@@ -83,6 +87,56 @@
 			<key>UserOverrideItemName</key>
 			<true/>
 		</dict>
+		<key>036A1D5D-6378-4D64-AA0C-DA2C9C885F80</key>
+		<dict>
+			<key>ItemData</key>
+			<dict>
+				<key>BookmarkData</key>
+				<data>
+				Ym9vayQDAAAAAAQQMAAAAGykRfm86jy8ydXhpJ6+qIqJ
+				vfeBye05owoaP+ctX7dyFAIAAAQAAAADAwAAAAgAKAUA
+				AAABAQAAVXNlcnMAAAAFAAAAAQEAAHJwYWdlAAAABQAA
+				AAEBAABTaXRlcwAAAA8AAAABAQAAd2lraWNpdGUtc2Vh
+				cmNoAAsAAAABAQAAYWRkLWFsbC5waHAAFAAAAAEGAAAQ
+				AAAAIAAAADAAAABAAAAAWAAAAAgAAAAEAwAAEGcCAAAA
+				AAAIAAAABAMAAIV0DQAAAAAACAAAAAQDAAAEVkwAAAAA
+				AAgAAAAEAwAAmtDBBgMAAAAIAAAABAMAAK37XQcDAAAA
+				FAAAAAEGAACIAAAAmAAAAKgAAAC4AAAAyAAAAAgAAAAA
+				BAAAQcNLi4D8xU4YAAAAAQIAAAEAAAAAAAAADwAAAAAA
+				AAAAAAAAAAAAAAgAAAAEAwAAAwAAAAAAAAAEAAAAAwMA
+				APUBAAAIAAAAAQkAAGZpbGU6Ly8vDAAAAAEBAABNYWNp
+				bnRvc2ggSEQIAAAABAMAAADgBANpAAAACAAAAAAEAABB
+				vt1dYgAAACQAAAABAQAAMjVFNDI4NkQtNzEyQy0zODk5
+				LUI0M0YtNUQzRjZBOEJEMTIxGAAAAAECAACBAAAAAQAA
+				AO8TAAABAAAAAAAAAAAAAAABAAAAAQEAAC8AAAAAAAAA
+				AQUAABoAAAABAQAATlNVUkxEb2N1bWVudElkZW50aWZp
+				ZXJLZXkAAAQAAAADAwAAwKUBANgAAAD+////AQAAAAAA
+				AAARAAAABBAAAGwAAAAAAAAABRAAANgAAAAAAAAAEBAA
+				AAQBAAAAAAAAQBAAAPQAAAAAAAAAAiAAANABAAAAAAAA
+				BSAAAEABAAAAAAAAECAAAFABAAAAAAAAESAAAIQBAAAA
+				AAAAEiAAAGQBAAAAAAAAEyAAAHQBAAAAAAAAICAAALAB
+				AAAAAAAAMCAAANwBAAAAAAAAAcAAACQBAAAAAAAAEcAA
+				ACAAAAAAAAAAEsAAADQBAAAAAAAAENAAAAQAAAAAAAAA
+				5AEAgAgCAAAAAAAA
+				</data>
+				<key>FileURL</key>
+				<string>file:///Users/rpage/Sites/wikicite-search/add-all.php</string>
+				<key>HasSecurityScope</key>
+				<true/>
+				<key>RelativePath</key>
+				<string>./add-all.php</string>
+				<key>TypeID</key>
+				<string>_CFileLocator</string>
+				<key>Version</key>
+				<integer>1</integer>
+			</dict>
+			<key>ItemName</key>
+			<string>add-all.php</string>
+			<key>ItemType</key>
+			<string>FileReference</string>
+			<key>UserOverrideItemName</key>
+			<true/>
+		</dict>
 		<key>04DCE0FE-C74A-4383-AAAE-8958B34CBBAB</key>
 		<dict>
 			<key>ItemData</key>
@@ -126,6 +180,56 @@
 			</dict>
 			<key>ItemName</key>
 			<string>match.html</string>
+			<key>ItemType</key>
+			<string>FileReference</string>
+			<key>UserOverrideItemName</key>
+			<true/>
+		</dict>
+		<key>09CD92E9-0E5A-40AC-A4E2-2F2125F934B4</key>
+		<dict>
+			<key>ItemData</key>
+			<dict>
+				<key>BookmarkData</key>
+				<data>
+				Ym9vaygDAAAAAAQQMAAAAMt3MSmnG+3+7eypf+zE5mwB
+				TmFQnhOQ3MPBvku9GBiWGAIAAAQAAAADAwAAAAgAKAUA
+				AAABAQAAVXNlcnMAAAAFAAAAAQEAAHJwYWdlAAAABQAA
+				AAEBAABTaXRlcwAAAA8AAAABAQAAd2lraWNpdGUtc2Vh
+				cmNoAA4AAAABAQAAY3NsX3RvX3JkZi5waHAAABQAAAAB
+				BgAAEAAAACAAAAAwAAAAQAAAAFgAAAAIAAAABAMAABBn
+				AgAAAAAACAAAAAQDAACFdA0AAAAAAAgAAAAEAwAABFZM
+				AAAAAAAIAAAABAMAAJrQwQYDAAAACAAAAAQDAABeNlwH
+				AwAAABQAAAABBgAAjAAAAJwAAACsAAAAvAAAAMwAAAAI
+				AAAAAAQAAEHDSuhf42OAGAAAAAECAAABAAAAAAAAAA8A
+				AAAAAAAAAAAAAAAAAAAIAAAABAMAAAMAAAAAAAAABAAA
+				AAMDAAD1AQAACAAAAAEJAABmaWxlOi8vLwwAAAABAQAA
+				TWFjaW50b3NoIEhECAAAAAQDAAAA4AQDaQAAAAgAAAAA
+				BAAAQb7dXWIAAAAkAAAAAQEAADI1RTQyODZELTcxMkMt
+				Mzg5OS1CNDNGLTVEM0Y2QThCRDEyMRgAAAABAgAAgQAA
+				AAEAAADvEwAAAQAAAAAAAAAAAAAAAQAAAAEBAAAvAAAA
+				AAAAAAEFAAAaAAAAAQEAAE5TVVJMRG9jdW1lbnRJZGVu
+				dGlmaWVyS2V5AAAEAAAAAwMAAL+lAQDYAAAA/v///wEA
+				AAAAAAAAEQAAAAQQAABwAAAAAAAAAAUQAADcAAAAAAAA
+				ABAQAAAIAQAAAAAAAEAQAAD4AAAAAAAAAAIgAADUAQAA
+				AAAAAAUgAABEAQAAAAAAABAgAABUAQAAAAAAABEgAACI
+				AQAAAAAAABIgAABoAQAAAAAAABMgAAB4AQAAAAAAACAg
+				AAC0AQAAAAAAADAgAADgAQAAAAAAAAHAAAAoAQAAAAAA
+				ABHAAAAgAAAAAAAAABLAAAA4AQAAAAAAABDQAAAEAAAA
+				AAAAAOgBAIAMAgAAAAAAAA==
+				</data>
+				<key>FileURL</key>
+				<string>file:///Users/rpage/Sites/wikicite-search/csl_to_rdf.php</string>
+				<key>HasSecurityScope</key>
+				<true/>
+				<key>RelativePath</key>
+				<string>./csl_to_rdf.php</string>
+				<key>TypeID</key>
+				<string>_CFileLocator</string>
+				<key>Version</key>
+				<integer>1</integer>
+			</dict>
+			<key>ItemName</key>
+			<string>csl_to_rdf.php</string>
 			<key>ItemType</key>
 			<string>FileReference</string>
 			<key>UserOverrideItemName</key>
@@ -418,6 +522,54 @@
 			</dict>
 			<key>ItemName</key>
 			<string>api_reconciliation.php</string>
+			<key>ItemType</key>
+			<string>FileReference</string>
+			<key>UserOverrideItemName</key>
+			<true/>
+		</dict>
+		<key>4542DE82-1349-4817-84F1-E41830F9E84E</key>
+		<dict>
+			<key>ItemData</key>
+			<dict>
+				<key>BookmarkData</key>
+				<data>
+				Ym9va+gCAAAAAAQQMAAAAE4O3yAfe/IaVwORrlqQp+Hl
+				FnJBY6DGySgZY3RIZg+e5AEAAAQAAAADAwAAAAgAKAUA
+				AAABAQAAVXNlcnMAAAAFAAAAAQEAAHJwYWdlAAAABQAA
+				AAEBAABTaXRlcwAAAA8AAAABAQAAd2lraWNpdGUtc2Vh
+				cmNoAAwAAAABAQAAYWRkLWJ1bGsucGhwFAAAAAEGAAAQ
+				AAAAIAAAADAAAABAAAAAWAAAAAgAAAAEAwAAEGcCAAAA
+				AAAIAAAABAMAAIV0DQAAAAAACAAAAAQDAAAEVkwAAAAA
+				AAgAAAAEAwAAmtDBBgMAAAAIAAAABAMAAINGXwcDAAAA
+				FAAAAAEGAACIAAAAmAAAAKgAAAC4AAAAyAAAAAgAAAAA
+				BAAAQcNLi4D8xU4YAAAAAQIAAAEAAAAAAAAADwAAAAAA
+				AAAAAAAAAAAAAAgAAAAEAwAAAwAAAAAAAAAEAAAAAwMA
+				APUBAAAIAAAAAQkAAGZpbGU6Ly8vDAAAAAEBAABNYWNp
+				bnRvc2ggSEQIAAAABAMAAADgBANpAAAACAAAAAAEAABB
+				vt1dYgAAACQAAAABAQAAMjVFNDI4NkQtNzEyQy0zODk5
+				LUI0M0YtNUQzRjZBOEJEMTIxGAAAAAECAACBAAAAAQAA
+				AO8TAAABAAAAAAAAAAAAAAABAAAAAQEAAC8AAAAAAAAA
+				AQUAAMwAAAD+////AQAAAAAAAAAQAAAABBAAAGwAAAAA
+				AAAABRAAANgAAAAAAAAAEBAAAAQBAAAAAAAAQBAAAPQA
+				AAAAAAAAAiAAANABAAAAAAAABSAAAEABAAAAAAAAECAA
+				AFABAAAAAAAAESAAAIQBAAAAAAAAEiAAAGQBAAAAAAAA
+				EyAAAHQBAAAAAAAAICAAALABAAAAAAAAMCAAANwBAAAA
+				AAAAAcAAACQBAAAAAAAAEcAAACAAAAAAAAAAEsAAADQB
+				AAAAAAAAENAAAAQAAAAAAAAA
+				</data>
+				<key>FileURL</key>
+				<string>file:///Users/rpage/Sites/wikicite-search/add-bulk.php</string>
+				<key>HasSecurityScope</key>
+				<true/>
+				<key>RelativePath</key>
+				<string>./add-bulk.php</string>
+				<key>TypeID</key>
+				<string>_CFileLocator</string>
+				<key>Version</key>
+				<integer>1</integer>
+			</dict>
+			<key>ItemName</key>
+			<string>add-bulk.php</string>
 			<key>ItemType</key>
 			<string>FileReference</string>
 			<key>UserOverrideItemName</key>
@@ -1252,6 +1404,56 @@
 			</dict>
 			<key>ItemName</key>
 			<string>reconciliation-client.php</string>
+			<key>ItemType</key>
+			<string>FileReference</string>
+			<key>UserOverrideItemName</key>
+			<true/>
+		</dict>
+		<key>E6AC90E6-17E8-47B9-9FE3-7C14D3EEAFAE</key>
+		<dict>
+			<key>ItemData</key>
+			<dict>
+				<key>BookmarkData</key>
+				<data>
+				Ym9vayADAAAAAAQQMAAAAGdURIpxlbAhIiDp8kvjVlSu
+				VdrdPzA7yeauJSYdfWq3EAIAAAQAAAADAwAAAAgAKAUA
+				AAABAQAAVXNlcnMAAAAFAAAAAQEAAHJwYWdlAAAABQAA
+				AAEBAABTaXRlcwAAAA8AAAABAQAAd2lraWNpdGUtc2Vh
+				cmNoAAUAAAABAQAAZ28uc2gAAAAUAAAAAQYAABAAAAAg
+				AAAAMAAAAEAAAABYAAAACAAAAAQDAAAQZwIAAAAAAAgA
+				AAAEAwAAhXQNAAAAAAAIAAAABAMAAARWTAAAAAAACAAA
+				AAQDAACa0MEGAwAAAAgAAAAEAwAAFEtfBwMAAAAUAAAA
+				AQYAAIQAAACUAAAApAAAALQAAADEAAAACAAAAAAEAABB
+				w0wiif4ZIBgAAAABAgAAAQAAAAAAAAAPAAAAAAAAAAAA
+				AAAAAAAACAAAAAQDAAADAAAAAAAAAAQAAAADAwAA9QEA
+				AAgAAAABCQAAZmlsZTovLy8MAAAAAQEAAE1hY2ludG9z
+				aCBIRAgAAAAEAwAAAOAEA2kAAAAIAAAAAAQAAEG+3V1i
+				AAAAJAAAAAEBAAAyNUU0Mjg2RC03MTJDLTM4OTktQjQz
+				Ri01RDNGNkE4QkQxMjEYAAAAAQIAAIEAAAABAAAA7xMA
+				AAEAAAAAAAAAAAAAAAEAAAABAQAALwAAAAAAAAABBQAA
+				GgAAAAEBAABOU1VSTERvY3VtZW50SWRlbnRpZmllcktl
+				eQAABAAAAAMDAADOpQEA2AAAAP7///8BAAAAAAAAABEA
+				AAAEEAAAaAAAAAAAAAAFEAAA1AAAAAAAAAAQEAAAAAEA
+				AAAAAABAEAAA8AAAAAAAAAACIAAAzAEAAAAAAAAFIAAA
+				PAEAAAAAAAAQIAAATAEAAAAAAAARIAAAgAEAAAAAAAAS
+				IAAAYAEAAAAAAAATIAAAcAEAAAAAAAAgIAAArAEAAAAA
+				AAAwIAAA2AEAAAAAAAABwAAAIAEAAAAAAAARwAAAIAAA
+				AAAAAAASwAAAMAEAAAAAAAAQ0AAABAAAAAAAAADgAQCA
+				BAIAAAAAAAA=
+				</data>
+				<key>FileURL</key>
+				<string>file:///Users/rpage/Sites/wikicite-search/go.sh</string>
+				<key>HasSecurityScope</key>
+				<true/>
+				<key>RelativePath</key>
+				<string>./go.sh</string>
+				<key>TypeID</key>
+				<string>_CFileLocator</string>
+				<key>Version</key>
+				<integer>1</integer>
+			</dict>
+			<key>ItemName</key>
+			<string>go.sh</string>
 			<key>ItemType</key>
 			<string>FileReference</string>
 			<key>UserOverrideItemName</key>
