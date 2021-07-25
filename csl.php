@@ -533,25 +533,28 @@ function wikidata_to_csl($id)
 					if ($ia_obj)
 					{
 						$pdf_name = '';
-						foreach ($ia_obj->files as $file)
+						if (isset($ia_obj->files))
 						{
-							if ($file->format == 'Text PDF')
+							foreach ($ia_obj->files as $file)
 							{
-								// PDF
-								$link = new stdclass;
-								$link->URL = 'https://archive.org/download/' . $ia_id . '/' . $file->name;
-								$link->{'content-type'} = 'application/pdf';
-							
-								// guess the thumbnail
-								$link->thumbnailUrl = 'https://archive.org/download/' . $ia_id . '/page/cover_thumb.jpg';
-				
-								if (!isset($obj->link))
+								if ($file->format == 'Text PDF')
 								{
-									$obj->link = array();
-								}
-								$obj->link[] = $link;
+									// PDF
+									$link = new stdclass;
+									$link->URL = 'https://archive.org/download/' . $ia_id . '/' . $file->name;
+									$link->{'content-type'} = 'application/pdf';
+							
+									// guess the thumbnail
+									$link->thumbnailUrl = 'https://archive.org/download/' . $ia_id . '/page/cover_thumb.jpg';
+				
+									if (!isset($obj->link))
+									{
+										$obj->link = array();
+									}
+									$obj->link[] = $link;
 
-							}						
+								}						
+							}
 						}
 					}					
 				}			

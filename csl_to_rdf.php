@@ -167,6 +167,18 @@ function csl_to_rdf($csl, $format_string = 'ntriples')
 		$triples[] =  '<' . $subject_id . '> <http://schema.org/sameAs> <https://doi.org/' . strtolower($csl->DOI) .'>  . ';	
 	}
 	
+	if (isset($csl->JSTOR))
+	{
+		$identifier_id = $subject_id . '#jstor';
+	
+		$triples[] = '<' . $subject_id . '> <http://schema.org/identifier> <' . $identifier_id .'>  . ';	
+		$triples[] = '<' . $identifier_id . '> <http://schema.org/propertyID> "jstor"  . ';	
+		$triples[] = '<' . $identifier_id . '> <http://schema.org/value> ' . '"' . addcslashes(strtolower($csl->JSTOR), '"') . '"' . '.';
+		
+		$triples[] =  '<' . $subject_id . '> <http://schema.org/sameAs> <https://www.jstor.org/stable/' . strtolower($csl->JSTOR) .'>  . ';	
+	}
+	
+	
 	// full text
 /*
   "link": [
