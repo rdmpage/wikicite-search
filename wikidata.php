@@ -20,14 +20,21 @@ function fetch_one($id, $force = false)
 
 	while (count($stack) > 0)
 	{
+		// print_r($stack);
+	
 		$id = array_pop($stack);
 	
 		$number = str_replace('Q', '', $id);
 	
 		$dir = floor($number / 1000);	
+		
+		// echo $dir . "\n";
+		
 		$dir = $config['cache'] . '/' . $dir;
 	
 		$filename = $dir . '/' . $id . '.json';
+		
+		// echo $filename . "\n";
 	
 		if (!file_exists($filename) || $force)
 		{
@@ -64,12 +71,23 @@ function fetch_one($id, $force = false)
 						}
 						break;
 					
+					// publication
 					case 'P1433':
 						$mainsnak = $v[0]->mainsnak;
 					
 						$id = $mainsnak->datavalue->value->id;
 						$stack[] = $id;
 						break;
+						
+					// family name and given name
+					case 'P734':
+					case 'P735':
+						$mainsnak = $v[0]->mainsnak;
+					
+						$id = $mainsnak->datavalue->value->id;
+						$stack[] = $id;
+						break;
+					
 					
 					default:
 						break;
