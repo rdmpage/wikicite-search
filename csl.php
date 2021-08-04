@@ -282,14 +282,17 @@ function get_author_info($id, $order, &$obj)
 function wikidata_to_csl($id)
 {
 	$wikidata_to_csl = array(
-		'P304' => 'page',
-		'P356' => 'DOI',
+		'P304' 	=> 'page',
+		'P356' 	=> 'DOI',
 		'P1184' => 'HANDLE',
-		'P888' => 'JSTOR',
-		'P433' => 'issue',
-		'P478' => 'volume',
+		'P888' 	=> 'JSTOR',
+		'P5315' => 'BIOSTOR',
+		'P698' 	=> 'PMID',
+		'P932'	=> 'PMC',
+		'P433' 	=> 'issue',
+		'P478' 	=> 'volume',
 		'P1476' => 'title',	
-		'P577' => 'issued',	
+		'P577' 	=> 'issued',	
 		'P2093' => 'author',	
 	);
 
@@ -441,7 +444,26 @@ function wikidata_to_csl($id)
 				{
 					$obj->{$wikidata_to_csl[$k]} = strtolower($value);
 				}		
-				break;									
+				break;		
+
+			// PMID
+			case 'P698':		
+				$value = literal_value_simple($claim);
+				if ($value != '')
+				{
+					$obj->{$wikidata_to_csl[$k]} = strtolower($value);
+				}		
+				break;		
+
+			// PMC 
+			case 'P932':		
+				$value = literal_value_simple($claim);
+				if ($value != '')
+				{
+					$obj->{$wikidata_to_csl[$k]} = strtolower($value);
+				}		
+				break;		
+
 			
 			// title
 			case 'P1476':
