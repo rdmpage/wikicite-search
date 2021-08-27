@@ -26,6 +26,8 @@ while (!feof($file_handle))
 		{
 			//echo $obj->id . "\n";
 			
+			// print_r($obj);
+			
 			upload($obj);
 	
 			// Give server a break every 100 items

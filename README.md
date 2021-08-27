@@ -32,15 +32,9 @@ network:
   host: 127.0.0.1
 ```
 
-
 Then we make sure to open the port using the [Google Console](https://docs.bitnami.com/google/faq/administration/use-firewall/). For direct connection to Elasticsearch (not recommended) open 9200, for connection via Apache with basic authentication open port 80 (note that this means you will need to add ELASTIC_USERNAME and ELASTIC_PASSWORD to the Heroku Config Vars. To set up Apache follow the instructions at [Add Basic Authentication And TLS Using Apache](https://docs.bitnami.com/google/apps/elasticsearch/administration/add-basic-auth-and-tls/).
 
-
-## Notes on PDF viewers
-
-[CORE PDF Reader](https://github.com/oacore/reader)
-
-### Icons
+## Icons
 
 <img src="https://github.com/rdmpage/wikicite-search/raw/main/images/1126709.png" width="100" height="100">
 

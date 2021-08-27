@@ -24,7 +24,7 @@ $filename = "test.txt";
 $count = 1;
 
 $force = true;
-$force = false;
+//$force = false;
 
 $file_handle = fopen($filename, "r");
 while (!feof($file_handle)) 
