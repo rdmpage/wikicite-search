@@ -4,41 +4,163 @@
 
 error_reporting(E_ALL);
 
+
 require_once('vendor/autoload.php');
 
-function csl_to_rdf($csl, $format_string = 'ntriples')
+use ML\JsonLD\JsonLD;
+use ML\JsonLD\NQuads;
+
+$use_bnodes = true;
+$use_bnodes = false;
+
+
+
+//----------------------------------------------------------------------------------------
+// Eventually it becomes clear we can't use b-nodes without causing triples tores to replicate
+// lots of triples, so create arbitrary URIs using the graph URI as the base.
+function create_bnode($graph, $type = "")
 {
-	$triples = array();
+	global $use_bnodes;
+	
+	$bnode = null;
+	
+	if ($use_bnodes)
+	{
+		if ($type != "")
+		{
+			$bnode = $graph->newBNode($type);
+		}
+		else
+		{
+			$bnode = $graph->newBNode();
+		}		
+	}
+	else
+	{
+		$bytes = random_bytes(5);
+		$node_id = bin2hex($bytes);
+		
+		// if we use fragment identifiers the rdf:list trick for JSON-LD fails :(
+		if (1)
+		{
+			$uri = '_:' . $node_id;
+		}
+		else
+		{
+			$uri = $graph->getUri() . '#' . $node_id;
+		}
 
-	// @id
-	$subject_id = 'http://www.wikidata.org/entity/' . $csl->id;
+		if ($type != "")
+		{
+			$bnode = $graph->resource($uri, $type);
+		}
+		else
+		{
+			$bnode = $graph->resource($uri);
+		}	
+	
+	}
 
-	// @type
+	return $bnode;
+}
+
+//----------------------------------------------------------------------------------------
+// Make a URI play nice with triple store
+function nice_uri($uri)
+{
+	$uri = str_replace('[', urlencode('['), $uri);
+	$uri = str_replace(']', urlencode(']'), $uri);
+	$uri = str_replace('<', urlencode('<'), $uri);
+	$uri = str_replace('>', urlencode('>'), $uri);
+
+	return $uri;
+}
+
+
+
+//----------------------------------------------------------------------------------------
+// From easyrdf/lib/parser/ntriples
+function unescapeString($str)
+    {
+        if (strpos($str, '\\') === false) {
+            return $str;
+        }
+
+        $mappings = array(
+            't' => chr(0x09),
+            'b' => chr(0x08),
+            'n' => chr(0x0A),
+            'r' => chr(0x0D),
+            'f' => chr(0x0C),
+            '\"' => chr(0x22),
+            '\'' => chr(0x27)
+        );
+        foreach ($mappings as $in => $out) {
+            $str = preg_replace('/\x5c([' . $in . '])/', $out, $str);
+        }
+
+        if (stripos($str, '\u') === false) {
+            return $str;
+        }
+
+        while (preg_match('/\\\(U)([0-9A-F]{8})/', $str, $matches) ||
+               preg_match('/\\\(u)([0-9A-F]{4})/', $str, $matches)) {
+            $no = hexdec($matches[2]);
+            if ($no < 128) {                // 0x80
+                $char = chr($no);
+            } elseif ($no < 2048) {         // 0x800
+                $char = chr(($no >> 6) + 192) .
+                        chr(($no & 63) + 128);
+            } elseif ($no < 65536) {        // 0x10000
+                $char = chr(($no >> 12) + 224) .
+                        chr((($no >> 6) & 63) + 128) .
+                        chr(($no & 63) + 128);
+            } elseif ($no < 2097152) {      // 0x200000
+                $char = chr(($no >> 18) + 240) .
+                        chr((($no >> 12) & 63) + 128) .
+                        chr((($no >> 6) & 63) + 128) .
+                        chr(($no & 63) + 128);
+            } else {
+                # FIXME: throw an exception instead?
+                $char = '';
+            }
+            $str = str_replace('\\' . $matches[1] . $matches[2], $char, $str);
+        }
+        return $str;
+    }
+
+
+
+
+//----------------------------------------------------------------------------------------
+// Generic CSL to RDF, flexible as possible
+
+function csl_to_rdf($csl, $format_string = 'ntriples')
+{	
+	$graph = new \EasyRdf\Graph();
+	
+	$type = 'schema:CreativeWork';
+	
 	if (isset($csl->type))
 	{
-		$type = '';
-	
 		switch ($csl->type)
 		{
 			case 'book':
-				$type = 'http://schema.org/Book';
+				$type = 'schema:Book';
 				break;
 			
 			case 'chapter':
-				$type = 'http://schema.org/Chapter';
+				$type = 'schema:Chapter';
 				break;
 			
 			case 'article-journal':
 			default:
-				$type = 'http://schema.org/ScholarlyArticle';
-				break;
-	
+				$type = 'schema:ScholarlyArticle';
+				break;	
 		}
+	}	
 
-		$triples[] =  '<' . $subject_id . '> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <' . $type .'>  . ';		
-	}
-	
-	// name
+	$work = $graph->resource('http://www.wikidata.org/entity/' . $csl->id, $type);	
 	
 	$name_done = false;
 	
@@ -48,12 +170,9 @@ function csl_to_rdf($csl, $format_string = 'ntriples')
 		{
 			foreach ($csl->multi->_key->title as $language => $value)
 			{
-				$triples[] =  '<' . $subject_id . '> <http://schema.org/name> "' . addcslashes($value, '"') . '"@' . $language . '  . ';		
-			
-			}
-		
-			$name_done = true;
-			
+				$work->addLiteral('schema:name', strip_tags($value), $language);
+			}		
+			$name_done = true;			
 		}
 	}
 	
@@ -61,16 +180,30 @@ function csl_to_rdf($csl, $format_string = 'ntriples')
 	{
 		if (isset($csl->title))
 		{
-				$triples[] =  '<' . $subject_id . '> <http://schema.org/name> "' . addcslashes($csl->title, '"') . '" . ';				
+			$work->add('schema:name', strip_tags($csl->title));
 		}
 	}
 
-	// date
+	// simple literals ---------------------------------------------------
+	if (isset($csl->volume))
+	{
+		$work->add('schema:volumeNumber', $csl->volume);
+	}
+	if (isset($csl->issue))
+	{
+		$work->add('schema:issueNumber', $csl->issue);
+	}
+	if (isset($csl->page))
+	{
+		$work->add('schema:pagination', $csl->page);
+	}
+
+	// date --------------------------------------------------------------
 	if (isset($csl->issued))
 	{
 		$date = '';
 		$d = $csl->issued->{'date-parts'}[0];
-		
+
 		// sanity check
 		if (is_numeric($d[0]))
 		{
@@ -80,19 +213,115 @@ function csl_to_rdf($csl, $format_string = 'ntriples')
 			if ( isset($month) and isset($day) ) $date = "$year-$month-$day";
 			else if ( isset($month) ) $date = "$year-$month-00";
 			else if ( isset($year) ) $date = "$year-00-00";
-			
-			$triples[] =  '<' . $subject_id . '> <http://schema.org/datePublished> "' . addcslashes($date, '"') .'"  . ';		
+
+			if (0)
+			{
+				// proper RDF
+				$work->add('schema:datePublished', new \EasyRdf\Literal\Date($date));
+			}
+			else
+			{
+				// simple literal
+				$work->add('schema:datePublished', $date);					
+			}
 		}				
+	}		
+
+	// authors (how do we handle order?) ---------------------------------
+	if (isset($csl->author))
+	{
+
+		if (1)
+		{
+			$authors_in_order = array();
+		
+			foreach ($csl->author as $creator)
+			{
+				$creator_id = '';
 				
-	}
+				if ($creator_id == '')
+				{
+					if (isset($creator->WIKIDATA))
+					{
+						$creator_id = 'http://www.wikidata.org/entity/' . $creator->WIKIDATA;
+					}
+				}
+
+				if ($creator_id == '')
+				{
+					if (isset($creator->ORCID))
+					{
+						$creator_id = $creator->ORCID;
+					}
+				}
+				
+				
+				// If we have a URI then create a node, otherwise it's a bNode
+				if ($creator_id == '')
+				{
+					$author = create_bnode($graph, 'schema:Person');
+				}
+				else
+				{
+					$author = $graph->resource($creator_id, 'schema:Person');	
+				}
+				
+				if (isset($creator->ORCID) && ($creator_id != $creator->ORCID))
+				{
+					$author->addResource('schema:sameAs', $creator->ORCID);
+				}
+
+				if (isset($creator->literal))
+				{
+					$author->add('schema:name', $creator->literal);
+				}
+				if (isset($creator->given))
+				{
+					$author->add('schema:givenName', $creator->given);
+				}
+				if (isset($creator->family))
+				{
+					$author->add('schema:familyName', $creator->family);
+				}
+
+
+				$authors_in_order[] = $author;			
+			}	
+		
+			$num_authors = count($authors_in_order);
+			
+			if ($num_authors > 0)
+			{		
+				$list = array();
+		
+				for ($k = 0; $k < $num_authors; $k++)
+				{
+					$list[$k] = create_bnode($graph, "");
+			
+					if ($k == 0)
+					{
+						$work->add('schema:author', $list[$k]);
+					}
+					else
+					{
+						$list[$k - 1]->add('rdf:rest', $list[$k]);
+					}	
+					$list[$k]->add('rdf:first', $authors_in_order[$k]);							
+				}
+				$list[$num_authors - 1]->addResource('rdf:rest', 'rdf:nil');
+			}
+		
+		}
 	
+		
+	}
+
 	// container
+	
 	if (isset($csl->{'container-title'}))
 	{
-		$container_id = $subject_id . '#container';
-		
-		$triples[] =  '<' . $subject_id . '> <http://schema.org/isPartOf> <' . $container_id .'>  . ';	
-		
+		$container = create_bnode($graph, "schema:Periodical");
+
 		$name_done = false;
 	
 		if (isset($csl->multi))
@@ -101,7 +330,7 @@ function csl_to_rdf($csl, $format_string = 'ntriples')
 			{
 				foreach ($csl->multi->_key->{'container-title'} as $language => $value)
 				{
-					$triples[] =  '<' . $container_id . '> <http://schema.org/name> "' . addcslashes($value, '"') . '"@' . $language . '  . ';					
+					$container->addLiteral('schema:name', strip_tags($value), $language);
 				}		
 				$name_done = true;			
 			}
@@ -109,167 +338,114 @@ function csl_to_rdf($csl, $format_string = 'ntriples')
 	
 		if (!$name_done)
 		{
-			$triples[] =  '<' . $container_id . '> <http://schema.org/name> "' . addcslashes($csl->title, '"') . '" . ';				
+			if (isset($csl->{'container-title'}))
+			{
+				$container->add('schema:name', $csl->{'container-title'});
+			}
 		}
-	
+
 		if (isset($csl->ISSN))
 		{
 			foreach ($csl->ISSN as $issn)
 			{
-				$triples[] =  '<' . $container_id . '> <http://schema.org/issn> "' . $issn .'"  . ';					
+				$container->add('schema:issn', $issn);
 			}
-			
-			$triples[] =  '<' . $container_id . '> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/Periodical>  . ';		
+		}					
+		$work->add('schema:isPartOf', $container);
+	}
+
+	// identifiers sameAs/seeAlso
+
+	// BHL is seeAlso
+	if (isset($csl->BHL))
+	{
+		$work->addResource('schema:seeAlso', 'https://www.biodiversitylibrary.org/page/' . $csl->BHL);
+	}
+
+	// JSTOR is sameAs
+	if (isset($csl->JSTOR))
+	{
+		$work->addResource('schema:sameAs', 'https://www.jstor.org/stable/' . $csl->JSTOR);
+	}
+
+	// Identifiers as property-value pairs so that we can query by identifier value
+	if (isset($csl->DOI))
+	{
+		// ORCID-style
+		$identifier = create_bnode($graph, "schema:PropertyValue");		
+		$identifier->add('schema:propertyID', 'doi');
+		$identifier->add('schema:value', strtolower($csl->DOI));
+		$work->add('schema:identifier', $identifier);
+	}
+
+	// URL(s)?
+	if (isset($csl->URL))
+	{
+		$urls = array();
+		if (!is_array($csl->URL))
+		{
+			$urls = array($csl->URL);
 		}
 		else
 		{
-			switch ($type)
-			{
-				case 'http://schema.org/ScholarlyArticle':
-					$triples[] =  '<' . $container_id . '> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/Periodical>  . ';		
-					break;
-					
-				case 'http://schema.org/Chapter':
-					$triples[] =  '<' . $container_id . '> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/Book>  . ';		
-					break;
-					
-				default:
-					break;
-					
-			}		
+			$urls = $csl->URL;
+		}
+
+		foreach ($urls as $url)
+		{
+			$work->addResource('schema:url', $url);
 		}
 	}
-	
-	// these could really be "partOf" relationships
-	if (isset($csl->volume))
-	{
-		$triples[] =  '<' . $subject_id . '> <http://schema.org/volumeNumber> "' . addcslashes($csl->volume, '"') .'"  . ';				
-	}
-	if (isset($csl->issue))
-	{
-		$triples[] =  '<' . $subject_id . '> <http://schema.org/issueNumber> "' . addcslashes($csl->volume, '"') .'"  . ';				
-	}
-	
-	if (isset($csl->page))
-	{
-		$triples[] =  '<' . $subject_id . '> <http://schema.org/pagination> "' . addcslashes($csl->page, '"') .'"  . ';				
-	}	
-	
-	// identifiers
-	if (isset($csl->DOI))
-	{
-		$identifier_id = $subject_id . '#doi';
-	
-		$triples[] = '<' . $subject_id . '> <http://schema.org/identifier> <' . $identifier_id .'>  . ';	
-		$triples[] = '<' . $identifier_id . '> <http://schema.org/propertyID> "doi"  . ';	
-		$triples[] = '<' . $identifier_id . '> <http://schema.org/value> ' . '"' . addcslashes(strtolower($csl->DOI), '"') . '"' . '.';
-		
-		$triples[] =  '<' . $subject_id . '> <http://schema.org/sameAs> <https://doi.org/' . strtolower($csl->DOI) .'>  . ';	
-	}
-	
-	if (isset($csl->JSTOR))
-	{
-		$identifier_id = $subject_id . '#jstor';
-	
-		$triples[] = '<' . $subject_id . '> <http://schema.org/identifier> <' . $identifier_id .'>  . ';	
-		$triples[] = '<' . $identifier_id . '> <http://schema.org/propertyID> "jstor"  . ';	
-		$triples[] = '<' . $identifier_id . '> <http://schema.org/value> ' . '"' . addcslashes(strtolower($csl->JSTOR), '"') . '"' . '.';
-		
-		$triples[] =  '<' . $subject_id . '> <http://schema.org/sameAs> <https://www.jstor.org/stable/' . strtolower($csl->JSTOR) .'>  . ';	
-	}
-	
-	
-	// full text
-/*
-  "link": [
-    {
-      "URL": "https://archive.org/download/acta-zoologica-lilloana-35-002/acta-zoologica-lilloana-35-002.pdf",
-      "content-type": "application/pdf",
-      "thumbnailUrl": "https://archive.org/download/acta-zoologica-lilloana-35-002/page/cover_thumb.jpg"
-    }
-  ],
-*/
 
-	if (isset($csl->link))	
+	// PDF?
+	if (isset($csl->link))
 	{
-		$count = 1;
+		$links = array(); // filter duplicates
+	
 		foreach ($csl->link as $link)
 		{
 			if (isset($link->{'content-type'}) && ($link->{'content-type'} == 'application/pdf'))
 			{
-				$encoding_id = $subject_id . '#encoding' . $count;
-				
-				$triples[] = '<' . $subject_id . '>  <http://schema.org/encoding> <' . $encoding_id . '> .';
-
-				$triples[] = '<' . $encoding_id . '>  <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/MediaObject>  .';
-				$triples[] = '<' . $encoding_id . '>  <http://schema.org/fileFormat> "application/pdf" .';
-				$triples[] = '<' . $encoding_id . '>  <http://schema.org/contentUrl> <' . $link->URL  . '>  .';
-
-				if (isset($link->thumbnailUrl))
+				if (!in_array($link->URL, $links))
 				{
-					$triples[] = '<' . $encoding_id . '>  <http://schema.org/thumbnailUrl> <' . $link->thumbnailUrl . '>  .';			
-				}
-								
-				$count++;
+					$links[] = $link->URL;
+			
+					$encoding = create_bnode($graph, "schema:MediaObject");
+					$encoding->add('schema:fileFormat', $link->{'content-type'});
+					$encoding->add('schema:contentUrl', $link->URL);
+				
+					if (isset($link->thumbnailUrl))
+					{
+						$encoding->add('schema:thumbnailUrl', $link->thumbnailUrl);
+					}
+				
+					$work->add('schema:encoding', $encoding);
+				}						
 			}
 		}
-	
 	}
 	
-	// authors
-	if (isset($csl->author))
+	// export....
+	// Triples 
+	$format = \EasyRdf\Format::getFormat('ntriples');
+
+	$serialiserClass  = $format->getSerialiserClass();
+	$serialiser = new $serialiserClass();
+
+	$triples = $serialiser->serialise($graph, 'ntriples');
+
+	// Remove JSON-style encoding
+	$told = explode("\n", $triples);
+	$tnew = array();
+
+	foreach ($told as $s)
 	{
-		$count = 1;
-		
-		foreach ($csl->author as $author)
-		{
-			$author_id = $subject_id . '#author' . $count;
-			
-			if (isset($author->WIKIDATA))
-			{
-				$author_id = 'http://www.wikidata.org/entity/' . $author->WIKIDATA;
-			}
-			
-			$triples[] = '<' . $subject_id . '> <http://schema.org/author> <' . $author_id .'>  . ';	
-						
-			// name
-			if (isset($author->literal))
-			{
-				$triples[] = '<' . $author_id . '> <http://schema.org/name> ' . '"' . addcslashes($author->literal, '"') . '"' . '.';			
-			}
-			if (isset($author->family))
-			{
-				$triples[] = '<' . $author_id . '> <http://schema.org/familyName> ' . '"' . addcslashes($author->family, '"') . '"' . '.';			
-			}
-			if (isset($author->given))
-			{
-				$triples[] = '<' . $author_id . '> <http://schema.org/givenName> ' . '"' . addcslashes($author->given, '"') . '"' . '.';			
-			}
-			
-			// identifiers
-			if (isset($author->ORCID))
-			{
-				$triples[] = '<' . $author_id . '> <http://schema.org/sameAs> ' . '<' . $author->ORCID . '>  .';			
-			}
-			if (isset($author->RESEARCHGATE))
-			{
-				$triples[] = '<' . $author_id . '> <http://schema.org/sameAs> ' . '<' . $author->RESEARCHGATE . '>  .';			
-			}
-			
-			// image
-			if (isset($author->thumbnailUrl))
-			{
-				$triples[] = '<' . $author_id . '> <http://schema.org/thumbnailUrl> ' . '<' . $author->thumbnailUrl . '>  .';			
-			}
-			
-			
-			$count++;
-		
-		}	
+		$tnew[] = unescapeString($s);
 	}
 
-	$graph = new \EasyRdf\Graph();
-	$graph->parse(join("\n", $triples));
+	$triples = join("\n", $tnew);
+	
+	//echo $triples . "\n";	
 	
     $format = \EasyRdf\Format::getFormat($format_string);
 
@@ -286,16 +462,10 @@ function csl_to_rdf($csl, $format_string = 'ntriples')
     
     if ($format_string == 'jsonld')
     {
+
 		$context = new stdclass;
 		$context->{'@vocab'} = 'http://schema.org/';
-	
-		// publication
-		$author = new stdclass;
-		$author->{'@id'} = "author";
-		$author->{'@container'} = "@set"; 
-
-		$context->{'author'} = $author;
-		
+			
 		// ISSN is always an array
 		$issn = new stdclass;
 		$issn->{'@id'} = "issn";
@@ -331,12 +501,18 @@ function csl_to_rdf($csl, $format_string = 'ntriples')
 		$sameas->{'@container'} = "@set";
 	
 		$context->{'sameAs'} = $sameas;
-	
+		
+		// author is ordered list
+		$author = new stdclass;
+		$author->{'@id'} = "author";
+		$author->{'@container'} = "@list";
+		$context->author = $author;
+
 	
 		// Frame document
 		$frame = (object)array(
 			'@context' => $context,
-			'@type' => $type
+			'@type' => str_replace('schema:', 'http://schema.org/', $type)
 		);	
 	
 		// Get simple JSON-LD
@@ -344,58 +520,34 @@ function csl_to_rdf($csl, $format_string = 'ntriples')
 		$options['context'] = $context;
 		$options['compact'] = true;
 		$options['frame']= $frame;	
+
+		// Use same libary as EasyRDF but access directly to output ordered list of authors
+		$nquads = new NQuads();
+		// And parse them again to a JSON-LD document
+		$quads = $nquads->parse($triples);		
+		$doc = JsonLD::fromRdf($quads);
+		
+		$obj = JsonLD::frame($doc, $frame);
+		
+		$data = json_encode($obj, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 	
 	}
+	else
+	{
 	
-    $data = $serialiser->serialise($graph, $format_string, $options);
-    
-    return $data;
+    	$data = $serialiser->serialise($graph, $format_string, $options);
+    }
+
+	return $data;	
+	
 	
 }
 
+
+
+
 if (0)
 {
-
-	$json = '{
-	  "id": "Q99669194",
-	  "issue": "2",
-	  "DOI": "10.2307/3223754",
-	  "type": "article-journal",
-	  "page": "177",
-	  "multi": {
-		"_key": {
-		  "title": {
-			"en": "Spiders of the New Genus Theridiotis (Araneae: Theridiidae)"
-		  },
-		  "container-title": {
-			"en": "Transactions of the American Microscopical Society"
-		  }
-		}
-	  },
-	  "title": "Spiders of the New Genus Theridiotis (Araneae: Theridiidae)",
-	  "volume": "73",
-	  "ISSN": [
-		"0003-0023",
-		"2325-5145"
-	  ],
-	  "container-title": "Transactions of the American Microscopical Society",
-	  "issued": {
-		"date-parts": [
-		  [
-			1954,
-			4
-		  ]
-		]
-	  },
-	  "author": [
-		{
-		  "literal": "Herbert W. Levi",
-		  "family": "Levi",
-		  "given": "Herbert W."
-		}
-	  ]
-	}';
-
 	$json = '{
 	  "id": "Q101150098",
 	  "DOI": "10.18942/bunruichiri.kj00001078622",
@@ -480,6 +632,92 @@ if (0)
 		}
 	  ]
 	}';
+	
+$json = '{
+  "id": "Q96108337",
+  "multi": {
+    "_key": {
+      "title": {
+        "en": "TAXA NOVA LAGERSTROEMIAE E FLORA SINICA",
+        "zh": "中国紫薇属新分类群"
+      },
+      "container-title": {
+        "zh-cn": "植物研究",
+        "en": "Bulletin of botanical research",
+        "mul": "Zhiwu yanjiu"
+      }
+    }
+  },
+  "title": "TAXA NOVA LAGERSTROEMIAE E FLORA SINICA",
+  "type": "article-journal",
+  "issued": {
+    "date-parts": [
+      [1982]
+    ]
+  },
+  "ISSN": ["1673-5102"],
+  "container-title": "植物研究",
+  "volume": "2",
+  "issue": "1",
+  "page": "143-150",
+  "link": [{
+    "URL": "https://archive.org/download/bulletin-botanical-research-harbin-2-143-150/bulletin-botanical-research-harbin-2-143-150.pdf",
+    "content-type": "application/pdf",
+    "thumbnailUrl": "https://archive.org/download/bulletin-botanical-research-harbin-2-143-150/page/cover_thumb.jpg"
+  }],
+  "author": [{
+    "literal": "Lee Shu-kang",
+    "family": "Shu-kang",
+    "given": "Lee"
+  }, {
+    "literal": "Lau Lan-fang",
+    "family": "Lan-fang",
+    "given": "Lau"
+  }]
+}'	;
+
+	$json = '{
+	  "id": "Q99669194",
+	  "issue": "2",
+	  "DOI": "10.2307/3223754",
+	  "type": "article-journal",
+	  "page": "177",
+	  "multi": {
+		"_key": {
+		  "title": {
+			"en": "Spiders of the New Genus Theridiotis (Araneae: Theridiidae)"
+		  },
+		  "container-title": {
+			"en": "Transactions of the American Microscopical Society"
+		  }
+		}
+	  },
+	  "title": "Spiders of the New Genus Theridiotis (Araneae: Theridiidae)",
+	  "volume": "73",
+	  "ISSN": [
+		"0003-0023",
+		"2325-5145"
+	  ],
+	  "container-title": "Transactions of the American Microscopical Society",
+	  "issued": {
+		"date-parts": [
+		  [
+			1954,
+			4
+		  ]
+		]
+	  },
+	  "author": [
+		{
+		  "literal": "Herbert W. Levi",
+		  "family": "Levi",
+		  "given": "Herbert W."
+		}
+	  ]
+	}';
+	
+	$json = '{"id":"Q22002907","DOI":"10.3897/mycokeys.7.4508","type":"article-journal","multi":{"_key":{"title":{"en":"DNA barcode identification of lichen-forming fungal species in the Rhizoplaca melanophthalma species-complex (Lecanorales, Lecanoraceae), including five new species"},"container-title":{"en":"MycoKeys"}}},"title":"DNA barcode identification of lichen-forming fungal species in the Rhizoplaca melanophthalma species-complex (Lecanorales, Lecanoraceae), including five new species","page":"1-22","volume":"7","issued":{"date-parts":[[2013,5,9]]},"ISSN":["1314-4057","1314-4049"],"container-title":"MycoKeys","author":[{"literal":"Steven Leavitt","family":"Leavitt","given":"Steven"},{"literal":"Fernando Fernández-Mendoza","family":"Fernández-Mendoza","given":"Fernando"},{"WIKIDATA":"Q21337958","literal":"Sergio Pérez-Ortega","ORCID":"https://orcid.org/0000-0002-5411-3698","family":"Pérez-Ortega","given":"Sergio"},{"WIKIDATA":"Q21502730","literal":"Mohammad Sohrabi","family":"Sohrabi","given":"Mohammad"},{"literal":"Pradeep Divakar","family":"Divakar","given":"Pradeep"},{"WIKIDATA":"Q21339029","literal":"Helge Thorsten Lumbsch","ORCID":"https://orcid.org/0000-0003-1512-835X","family":"Lumbsch","given":"Helge Thorsten"},{"literal":"Larry St. Clair","family":"Clair","given":"Larry St."}]}';
+	
 
 	$csl = json_decode($json);
 

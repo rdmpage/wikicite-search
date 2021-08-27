@@ -15,6 +15,7 @@
 		<string>6111F65B-B373-46D1-8C00-C604FCD885CC</string>
 		<string>2CBD8FC9-0D23-43C0-84B7-86B30864BE74</string>
 		<string>4B675C22-BB72-4A0B-9EFF-6A52828A5A95</string>
+		<string>9F0A29F9-F5A8-4D1C-8330-F200CE4D25A7</string>
 		<string>09CD92E9-0E5A-40AC-A4E2-2F2125F934B4</string>
 		<string>48E0FBE0-734F-4477-B253-89B2BDA3A409</string>
 		<string>0ADD5A2C-37A8-4E98-B367-8324740B8BEE</string>
@@ -1108,6 +1109,54 @@
 			</dict>
 			<key>ItemName</key>
 			<string>env.php</string>
+			<key>ItemType</key>
+			<string>FileReference</string>
+			<key>UserOverrideItemName</key>
+			<true/>
+		</dict>
+		<key>9F0A29F9-F5A8-4D1C-8330-F200CE4D25A7</key>
+		<dict>
+			<key>ItemData</key>
+			<dict>
+				<key>BookmarkData</key>
+				<data>
+				Ym9va/ACAAAAAAQQMAAAAJNZ1JEuuBncdAd+hDWIt7nr
+				gzlwh5H7ovWXFyxaHsTm7AEAAAQAAAADAwAAAAgAKAUA
+				AAABAQAAVXNlcnMAAAAFAAAAAQEAAHJwYWdlAAAABQAA
+				AAEBAABTaXRlcwAAAA8AAAABAQAAd2lraWNpdGUtc2Vh
+				cmNoABIAAAABAQAAY3NsX3RvX3JkZl9vbGQucGhwAAAU
+				AAAAAQYAABAAAAAgAAAAMAAAAEAAAABYAAAACAAAAAQD
+				AAAQZwIAAAAAAAgAAAAEAwAAhXQNAAAAAAAIAAAABAMA
+				AARWTAAAAAAACAAAAAQDAACa0MEGAwAAAAgAAAAEAwAA
+				uRTiBwMAAAAUAAAAAQYAAJAAAACgAAAAsAAAAMAAAADQ
+				AAAACAAAAAAEAABBw0roX+NjgBgAAAABAgAAAQAAAAAA
+				AAAPAAAAAAAAAAAAAAAAAAAACAAAAAQDAAADAAAAAAAA
+				AAQAAAADAwAA9QEAAAgAAAABCQAAZmlsZTovLy8MAAAA
+				AQEAAE1hY2ludG9zaCBIRAgAAAAEAwAAAOAEA2kAAAAI
+				AAAAAAQAAEG+3V1iAAAAJAAAAAEBAAAyNUU0Mjg2RC03
+				MTJDLTM4OTktQjQzRi01RDNGNkE4QkQxMjEYAAAAAQIA
+				AIEAAAABAAAA7xMAAAEAAAAAAAAAAAAAAAEAAAABAQAA
+				LwAAAAAAAAABBQAAzAAAAP7///8BAAAAAAAAABAAAAAE
+				EAAAdAAAAAAAAAAFEAAA4AAAAAAAAAAQEAAADAEAAAAA
+				AABAEAAA/AAAAAAAAAACIAAA2AEAAAAAAAAFIAAASAEA
+				AAAAAAAQIAAAWAEAAAAAAAARIAAAjAEAAAAAAAASIAAA
+				bAEAAAAAAAATIAAAfAEAAAAAAAAgIAAAuAEAAAAAAAAw
+				IAAA5AEAAAAAAAABwAAALAEAAAAAAAARwAAAIAAAAAAA
+				AAASwAAAPAEAAAAAAAAQ0AAABAAAAAAAAAA=
+				</data>
+				<key>FileURL</key>
+				<string>file:///Users/rpage/Sites/wikicite-search/csl_to_rdf_old.php</string>
+				<key>HasSecurityScope</key>
+				<true/>
+				<key>RelativePath</key>
+				<string>./csl_to_rdf_old.php</string>
+				<key>TypeID</key>
+				<string>_CFileLocator</string>
+				<key>Version</key>
+				<integer>1</integer>
+			</dict>
+			<key>ItemName</key>
+			<string>csl_to_rdf_old.php</string>
 			<key>ItemType</key>
 			<string>FileReference</string>
 			<key>UserOverrideItemName</key>
