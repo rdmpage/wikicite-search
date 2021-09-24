@@ -361,6 +361,15 @@ function csl_to_rdf($csl, $format_string = 'ntriples')
 	{
 		$work->addResource('schema:seeAlso', 'https://www.biodiversitylibrary.org/page/' . $csl->BHL);
 	}
+	
+	// DOI is sameAs if not the URI for the work
+	if (isset($csl->DOI))
+	{		
+		if (!preg_match('/doi.org/', $work->getUri()))
+		{
+			$work->addResource('schema:sameAs', 'https://doi.org/' . strtolower($csl->DOI));
+		}
+	}	
 
 	// JSTOR is sameAs
 	if (isset($csl->JSTOR))
