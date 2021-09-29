@@ -270,6 +270,11 @@ function csl_to_rdf($csl, $format_string = 'ntriples')
 				{
 					$author->addResource('schema:sameAs', $creator->ORCID);
 				}
+				
+				if (isset($creator->RESEARCHGATE))
+				{
+					$author->addResource('schema:sameAs', $creator->RESEARCHGATE);
+				}				
 
 				if (isset($creator->literal))
 				{
