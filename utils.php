@@ -268,6 +268,13 @@ function compare($name1, $name2, $debug = false)
 	{
 		$result->p = 0;
 	}
+	
+	// try and avoid spurious matches
+	if (strlen($result->str2) < 50)
+	{
+		$result->p = 0;
+	}
+	
 
 	$lcs->get_alignment();
 			
