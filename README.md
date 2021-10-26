@@ -6,8 +6,28 @@ Goal is to have a simple search interface that (a) finds an article if we have i
 
 ## API
 
+### Search
 
+### Search by page
 
+### Reconciliation API
+
+## Searching
+
+### By [journal, volume, page] tuple
+
+To locate an article by [journal, volume, page] tuple (e.g., `Int. J. Primatol., 21: 934.` we need to index the start and end pages of an article as integers so that we can do a range query. Hence when creating the index
+
+```
+"startpage": {
+   "type": "integer"
+},
+"endpage": {
+   "type": "integer"
+}
+```
+
+Remaining challenge is mapping abbreviated journal names to actual journals. To help this I add ISO 4 abbreviations to journals where ever possible.
 
 ## Elasticsearch
 
