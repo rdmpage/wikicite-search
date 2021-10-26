@@ -150,6 +150,7 @@ function get_container_info($id, &$obj)
 	{
 		switch ($k)
 		{
+			// ISSN
 			case 'P236':
 				if (!isset($obj->ISSN))
 				{
@@ -161,7 +162,8 @@ function get_container_info($id, &$obj)
 				}			
 				break;
 				
-			case 'P1476':
+			// title
+			case 'P1476': 
 				$values = literal_value_multilingual ($claim);
 				
 				// print_r($values);
@@ -184,6 +186,15 @@ function get_container_info($id, &$obj)
 						$obj->{'container-title'} = $text[0];
 					}
 				}			
+				break;
+				
+			// ISO 4 abbreviation
+			case 'P1160':
+				$value = literal_value_simple($claim);
+				if ($value != '')
+				{
+					$obj->journalAbbreviation = $value;
+				}					
 				break;
 			
 			default:
@@ -463,7 +474,6 @@ function wikidata_to_csl($id)
 					$obj->{$wikidata_to_csl[$k]} = strtolower($value);
 				}		
 				break;		
-
 			
 			// title
 			case 'P1476':
@@ -534,8 +544,7 @@ function wikidata_to_csl($id)
 				$container_id = $mainsnak->datavalue->value->id;			
 				get_container_info($container_id, $obj);			
 				break;
-				
-				
+								
 			// BioStor
 			case 'P5315':
 				$value = literal_value_simple($claim);

@@ -111,6 +111,27 @@ function display_search($q, $callback = '')
 
 }
 
+//----------------------------------------------------------------------------------------
+function display_locate_page($container, $volume, $page, $callback = '')
+{
+	$obj = locate_page($container, $volume, $page);
+
+	header("Content-type: text/plain");
+	
+	if ($callback != '')
+	{
+		echo $callback . '(';
+	}
+	
+	echo json_encode($obj, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+	
+	if ($callback != '')
+	{
+		echo ')';
+	}
+
+}
+
 
 //----------------------------------------------------------------------------------------
 // Count number of records
@@ -161,7 +182,7 @@ function main()
 		$callback = $_GET['callback'];
 	}
 	
-	// Submit job
+	// get one item with optional formatting
 	if (!$handled)
 	{
 		if (isset($_GET['id']))
@@ -184,6 +205,7 @@ function main()
 		}
 	}
 	
+	// get number of items in database
 	if (!$handled)
 	{
 		if (isset($_GET['count']))
@@ -192,8 +214,28 @@ function main()
 			$handled = true;
 		}
 			
-	}			
+	}		
 	
+	
+	// locate item from [container, volume, page] tuple
+	if (!$handled)
+	{
+		if (isset($_GET['container']) && isset($_GET['volume']) && isset($_GET['page']))
+		{	
+			$container 		 = $_GET['container'];
+			$volume			 = $_GET['volume'];
+			$page   = $_GET['page'];
+
+			display_locate_page($container, $volume, $page, $callback);
+			
+			$handled = true;
+		}
+			
+	}		
+
+		
+	
+	// do text search
 	if (!$handled)
 	{
 		if (isset($_GET['q']))

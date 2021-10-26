@@ -153,6 +153,15 @@ function do_search($q, $limit = 5)
 		}
 	}
 
+	$output = search_result_to_rdf($obj, $q);
+
+	return $output;
+}
+
+
+//----------------------------------------------------------------------------------------
+function search_result_to_rdf($obj, $query_string = "")
+{
 	// process and convert to RDF
 
 	// schema.org DataFeed
@@ -214,7 +223,10 @@ function do_search($q, $limit = 5)
 			
 			$output->{'@graph'}[0]->description .=  $time;
 			
-			$output->{'@graph'}[0]->query = $q;
+			if ($query_string != '')
+			{
+				$output->{'@graph'}[0]->query = $query_string;
+			}
 
 			foreach ($obj->hits->hits as $hit)
 			{
@@ -367,20 +379,84 @@ function do_search($q, $limit = 5)
 		}
 
 	}
+	
+	return $output;
+}
 
-	//print_r($output);
+//----------------------------------------------------------------------------------------
+// Search for publication that contains a particular page
+function locate_page($containerName, $volumeNumber, $pageNumber)
+{
+	global $elastic;
+	
+	$query = new stdclass;
+	$query->size = 10;
+	$query->query = new stdclass;
+	$query->query->bool = new stdclass;
+	$query->query->bool->must = array();
+	
+	// starting page <= page
+	$startpage = new stdclass;
+	$startpage->range = new stdclass;
+	$startpage->range->{'search_data.startpage'} = new stdclass;
+	$startpage->range->{'search_data.startpage'}->lte = (int)$pageNumber;
+	
+	$query->query->bool->must[] = $startpage;
+	
+	// end page >= page
+	$endpage = new stdclass;
+	$endpage->range = new stdclass;
+	$endpage->range->{'search_data.endpage'} = new stdclass;
+	$endpage->range->{'search_data.endpage'}->gte = (int)$pageNumber;
+	
+	$query->query->bool->must[] = $endpage;
+	
+	$volume = new stdclass;
+	$volume->match = new stdclass;
+	$volume->match->{'search_display.csl.volume'} = $volumeNumber;
+	
+	$query->query->bool->must[] = $volume;
+	
+	$container = new stdclass;
+	$container->match = new stdclass;
+	$container->match->{'search_display.csl.journalAbbreviation'} = $containerName;
+	
+	$query->query->bool->must[] = $container;
+	
+
+	
+	$json = json_encode($query, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+
+	$response = $elastic->send('POST',  '_search?pretty', $json);					
+
+	$obj = json_decode($response);
+	
+	// "fake query string"
+	$query_string = join(", ", array($containerName, $volumeNumber, $pageNumber));
+	
+	$output = search_result_to_rdf($obj, $query_string);
 
 	return $output;
+
 }
 
 
 // test
 if (0)
 {
+	/*
 	$q = 'freshwater crayfish';
 	$q = 'David Blair';
 	
 	$result = do_search($q);
+	*/
+	
+	$container 	= 'Int. J. Primatol.';
+	$volume 	= 21;
+	$page 		= 960;
+
+	$result = locate_page($container, $volume, $page);
+	
 	
 	// print_r($result);
 	
@@ -434,14 +510,17 @@ if (0)
 
 		
 		// highlights
-		echo '<div style="font-size:0.8em;color:#222;margin:4px;">';
-		echo $item->description;
-		echo '</div>';
+		if (isset($item->description))
+		{
+			echo '<div style="font-size:0.8em;color:#222;margin:4px;">';
+			echo $item->description;
+			echo '</div>';
+		}
 		
 		if (isset($item->doi))
 		{
 			echo '<div style="font-size:0.8em;color:#222;margin:4px;">';
-			echo $item->description;
+			echo $item->doi;
 			echo '</div>';
 		}
 	

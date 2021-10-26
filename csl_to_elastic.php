@@ -362,6 +362,17 @@ function csl_to_elastic ($csl)
 	// Add CSL for display
 	$doc->search_display->csl = $csl;
 	
+	
+	// Data for range-based queries
+	if (isset($csl->page))
+	{
+		if (preg_match('/^(?<spage>\d+)[-|—](?<epage>\d+)$/u', $csl->page, $m))
+		{
+			$doc->search_data->startpage = $m['spage'];
+			$doc->search_data->endpage = $m['epage'];
+		}	
+	}
+	
 	// empty for debugging	
 	//$doc->search_display->csl = new stdclass;
 	
@@ -376,7 +387,7 @@ function upload ($csl)
 
 	$doc = csl_to_elastic($csl);
 
-	//print_r($doc);
+	print_r($doc);
 	//print_r($csl);
 	
 	$elastic_doc = new stdclass;
