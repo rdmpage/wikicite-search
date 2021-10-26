@@ -368,8 +368,8 @@ function csl_to_elastic ($csl)
 	{
 		if (preg_match('/^(?<spage>\d+)[-|—](?<epage>\d+)$/u', $csl->page, $m))
 		{
-			$doc->search_data->startpage = $m['spage'];
-			$doc->search_data->endpage = $m['epage'];
+			$doc->search_data->startpage = (int)$m['spage'];
+			$doc->search_data->endpage = (int)$m['epage'];
 		}	
 	}
 	
