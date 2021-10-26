@@ -309,21 +309,58 @@ else
 
 <div>
 <h1>Wikicite Search: a bibliographic search engine for Wikidata</h1>
+</div>
 
-<p><b><span id="stats"></span> publications in database.</b></p>
 
-<p>Wikicite Search is a search engine for scholarly articles and books in <a href="https://www.wikidata.org">Wikidata</a>.
-At present it's focus is on the <b>taxonomic literature</b>, that is, papers that describe new species or other taxa, revise existing taxa,
-publish phylogenies, etc. 
-It only has access to a small subset of literature added by the <a href="http://wikicite.org">WikiCite</a>
-project, but I hope this will grow over time.</p>
 
-<p>The initial goal is to provide tools to simple <a href="?q=Boomsma">search</a>, <a href="./match.html">match</a>, and display articles in a variety of formats such as <a href="./api.php?id=Q96108337">CSL-JSON</a>
-and <a href="./api.php?id=Q96108337&format=jsonld">JSON-LD</a>. Where possible access to PDFs for articles is provided by
-the <a href="https://archive.org">Internet Archive</a> or the <a href="https://web.archive.org">Wayback Machine</a>. 
-</p>
+<div class="row">
+	<div class="col s5 green lighten-2">
+		<h4>Search Wikidata</h4>
+		<img style="float:left;height:128px;padding:1em;" src="images/wikidata.svg">
+		<p>Wikicite Search is a search engine for scholarly articles and books in <a href="https://www.wikidata.org">Wikidata</a>.</p>
+	</div>
+	
+	<div class="col s1"></div>
+	
+	<div class="col s5  lime lighten-2">
+	<h4>Export data</h4>
+	<img style="float:left;height:128px;padding:1em;" src="images/jsonld.svg">
+	<p>Display articles in a variety of formats such as <a href="./api.php?id=Q96108337">CSL-JSON</a>
+and <a href="./api.php?id=Q96108337&format=jsonld">JSON-LD</a></p>
+	
+	</div>
+
+
 
 </div>
+
+<div class="row">
+	<div class="col s5 deep-orange lighten-2">
+	<h4>View PDFs</h4>
+	<img style="float:left;height:128px;padding:1em;" src="images/1126709.svg">
+		<p>View PDFs for articles from
+the <a href="https://archive.org">Internet Archive</a> or the <a href="https://web.archive.org">Wayback Machine</a>. </p>
+	
+	</div>
+	
+	<div class="col s1"></div>
+	
+	
+	<div class="col s5 cyan lighten-3">
+	<h4>Bulk match references</h4>
+	<img style="float:left;height:128px;padding:1em;" src="images/refine.svg">
+	<p><a href="./match.html">Match lists of references</a> using an OpenRefine compatible API</p>
+	</div>
+
+
+
+</div>
+
+<div>
+<h4><b><span id="stats"></span></b> publications in database.</h4>
+</div>
+
+
 
 <script>
 	get_stats();
@@ -342,9 +379,7 @@ the <a href="https://archive.org">Internet Archive</a> or the <a href="https://w
 			<div class="container">
             	<div class="row">
             	<div class="divider"></div>
-            		<a href=".">WikiCite Search</a> is a project by <a href="https://twitter.com/rdmpage">Rod Page</a> 
-            		to provide a bibliographic search engine for <a href="https://www.wikidata.org/">Wikidata</a>. 
-            		See also the <a href="./match.html">Match references</a> reconciliation service.
+            		<a href=".">WikiCite Search</a> is a project by <a href="https://twitter.com/rdmpage">Rod Page</a>.
             		
             	</div>
             </div>

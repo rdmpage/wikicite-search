@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0" y="0" width="300" height="300" viewBox="0, 0, 300, 300">
+  <g id="Page-1">
+    <path d="M88.343,61.657 L88.343,0 L150,0 z" fill-opacity="0" stroke="#000000" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" id="Stroke-25"/>
+    <path d="M88.343,61.657 L88.343,0 L26.687,61.657 z" fill-opacity="0" stroke="#000000" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" id="Stroke-27"/>
+    <path d="M211.657,61.657 L211.657,0 L150.001,0 z" fill-opacity="0" stroke="#000000" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" id="Stroke-29"/>
+    <path d="M88.343,61.657 L150,0 L211.656,61.657 z" fill-opacity="0" stroke="#000000" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" id="Stroke-31"/>
+    <path d="M211.657,61.657 L211.657,0 L273.313,61.657 z" fill-opacity="0" stroke="#000000" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" id="Stroke-33"/>
+    <path d="M88.343,61.657 L26.687,61.657 L150,184.97 z" fill-opacity="0" stroke="#000000" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" id="Stroke-35"/>
+    <path d="M211.657,61.657 L88.344,61.657 L150.001,184.97 z" fill-opacity="0" stroke="#000000" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" id="Stroke-37"/>
+    <path d="M273.313,61.657 L211.657,61.657 L150.001,184.97 z" fill-opacity="0" stroke="#000000" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" id="Stroke-39"/>
+  </g>
+</svg>
