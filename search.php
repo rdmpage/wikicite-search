@@ -411,15 +411,26 @@ function locate_page($containerName, $volumeNumber, $pageNumber)
 	
 	$query->query->bool->must[] = $endpage;
 	
+	// volume
 	$volume = new stdclass;
 	$volume->match = new stdclass;
 	$volume->match->{'search_display.csl.volume'} = $volumeNumber;
 	
 	$query->query->bool->must[] = $volume;
 	
+	
+	// container is either a journal name or an ISSN
 	$container = new stdclass;
 	$container->match = new stdclass;
-	$container->match->{'search_display.csl.journalAbbreviation'} = $containerName;
+	
+	if (preg_match('/[0-9]{4}-[0-9]{3}[0-9X]/', $containerName))
+	{
+		$container->match->{'search_display.csl.ISSN'} = $containerName;		
+	}
+	else
+	{
+		$container->match->{'search_display.csl.journalAbbreviation'} = $containerName;	
+	}
 	
 	$query->query->bool->must[] = $container;
 	
