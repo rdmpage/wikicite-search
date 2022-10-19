@@ -366,7 +366,7 @@ function csl_to_elastic ($csl)
 	// Data for range-based queries
 	if (isset($csl->page))
 	{
-		if (preg_match('/^(?<spage>\d+)[-|—](?<epage>\d+)$/u', $csl->page, $m))
+		if (preg_match('/^(?<spage>\d+)[-|—|–](?<epage>\d+)$/u', $csl->page, $m))
 		{
 			$doc->search_data->startpage = (int)$m['spage'];
 			$doc->search_data->endpage = (int)$m['epage'];

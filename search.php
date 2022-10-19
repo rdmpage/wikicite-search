@@ -425,7 +425,7 @@ function locate_page($containerName, $volumeNumber, $pageNumber)
 	
 	if (preg_match('/[0-9]{4}-[0-9]{3}[0-9X]/', $containerName))
 	{
-		$container->match->{'search_display.csl.ISSN'} = $containerName;		
+		$container->match->{'search_display.csl.ISSN'} = $containerName;	
 	}
 	else
 	{

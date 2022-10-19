@@ -20,6 +20,7 @@ $filename = "extra.txt";
 //$filename = "more.txt";
 //$filename = "have.txt";
 $filename = "test.txt";
+//$filename = "junk/extra.txt";
 
 $count = 1;
 
@@ -36,12 +37,14 @@ while (!feof($file_handle))
 
 		echo "$id\n";
 			
-		fetch_one($id, $force);
+		$call_count = fetch_one($id, $force);
+		
+		$count += $call_count;
 	
 		// Give server a break every 10 items
-		if (($count++ % 10) == 0)
+		if (($count % 4) == 0)
 		{
-			$rand = rand(1000000, 3000000);
+			$rand = rand(2000000, 9000000);
 			echo "\n ...sleeping for " . round(($rand / 1000000),2) . ' seconds' . "\n\n";
 			usleep($rand);
 		}	

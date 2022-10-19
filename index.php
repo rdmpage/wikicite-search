@@ -164,6 +164,8 @@ body {
 						</div>
 					</form>
 				</div>
+				
+				
 	<!-- Modal popup -->
 				<div id="modal" class="modal" style="z-index: 1003; display: none; opacity: 0; transform: scaleX(0.7); top: 4%;">
 					<div class="modal-content">
@@ -201,7 +203,8 @@ if ($result)
 			
 			if (isset($item->thumbnailUrl))
 			{
-				echo '<img class="z-depth-2" src="https://aipbvczbup.cloudimg.io/s/height/100/' . $item->thumbnailUrl . '" height="100" style="box-shadow:0 1px 3px rgba(0,0,0,0.5)">';					
+				//echo '<img class="z-depth-2" src="https://aipbvczbup.cloudimg.io/s/height/100/' . $item->thumbnailUrl . '" height="100" style="box-shadow:0 1px 3px rgba(0,0,0,0.5)">';					
+				echo '<img class="z-depth-2" src="https://aezjkodskr.cloudimg.io/' . $item->thumbnailUrl . '?height=100" height="100" style="box-shadow:0 1px 3px rgba(0,0,0,0.5)">';					
 			}
 			else
 			{

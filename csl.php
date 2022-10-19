@@ -290,7 +290,7 @@ function get_author_info($id, $order, &$obj)
 
 //----------------------------------------------------------------------------------------
 
-function wikidata_to_csl($id)
+function wikidata_to_csl($id, $hit_servers = true)
 {
 	$wikidata_to_csl = array(
 		'P304' 	=> 'page',
@@ -317,6 +317,11 @@ function wikidata_to_csl($id)
 	
 	$obj = new stdclass;
 	$obj->id = $id;
+	
+	if (!isset($wd->entities->{$id}->claims))
+	{
+		return null;
+	}
 
 	foreach ($wd->entities->{$id}->claims as $k => $claim)
 	{
@@ -553,38 +558,41 @@ function wikidata_to_csl($id)
 				{
 					$obj->BIOSTOR = $value;
 								
-					$ia_id = 'biostor-' . $value;
-				
-					// could use simple rule but I don't have all of BioStor in IA yet
-					$ia_url = 'https://archive.org/metadata/' . $ia_id;
-				
-					$ia_json = get($ia_url);
-				
-					$ia_obj = json_decode($ia_json);
-					if ($ia_obj)
+					if ($hit_servers)
 					{
-						$pdf_name = '';
-						if (isset($ia_obj->files))
-						{
-							foreach ($ia_obj->files as $file)
-							{
-								if ($file->format == 'Text PDF')
-								{
-									// PDF
-									$link = new stdclass;
-									$link->URL = 'https://archive.org/download/' . $ia_id . '/' . $file->name;
-									$link->{'content-type'} = 'application/pdf';
-							
-									// guess the thumbnail
-									$link->thumbnailUrl = 'https://archive.org/download/' . $ia_id . '/page/cover_thumb.jpg';
+						$ia_id = 'biostor-' . $value;
 				
-									if (!isset($obj->link))
+						// could use simple rule but I don't have all of BioStor in IA yet
+						$ia_url = 'https://archive.org/metadata/' . $ia_id;
+				
+						$ia_json = get($ia_url);
+				
+						$ia_obj = json_decode($ia_json);
+						if ($ia_obj)
+						{
+							$pdf_name = '';
+							if (isset($ia_obj->files))
+							{
+								foreach ($ia_obj->files as $file)
+								{
+									if ($file->format == 'Text PDF')
 									{
-										$obj->link = array();
-									}
-									$obj->link[] = $link;
+										// PDF
+										$link = new stdclass;
+										$link->URL = 'https://archive.org/download/' . $ia_id . '/' . $file->name;
+										$link->{'content-type'} = 'application/pdf';
+							
+										// guess the thumbnail
+										$link->thumbnailUrl = 'https://archive.org/download/' . $ia_id . '/page/cover_thumb.jpg';
+				
+										if (!isset($obj->link))
+										{
+											$obj->link = array();
+										}
+										$obj->link[] = $link;
 
-								}						
+									}						
+								}
 							}
 						}
 					}					
@@ -599,53 +607,58 @@ function wikidata_to_csl($id)
 				{
 					// We can't always rely on simple rules as some archives (e.g. PubMed Central)
 					// have their own rules for files
-									
-					if (preg_match('/pubmed-PMC/', $value))
+					
+					if ($hit_servers)
 					{
-						$ia_url = 'https://archive.org/metadata/' . $value;
-					
-						$ia_json = get($ia_url);
-					
-						$ia_obj = json_decode($ia_json);
-						if ($ia_obj)
-						{
-							$pdf_name = '';
-							foreach ($ia_obj->files as $file)
-							{
-								if ($file->format == 'Text PDF')
-								{
-									// PDF
-									$link = new stdclass;
-									$link->URL = 'https://archive.org/download/' . $value . '/' . $file->name;
-									$link->{'content-type'} = 'application/pdf';
-								
-									// guess the thumbnail
-									$link->thumbnailUrl = 'https://archive.org/download/' . $value . '/page/cover_thumb.jpg';
-					
-									if (!isset($obj->link))
-									{
-										$obj->link = array();
-									}
-									$obj->link[] = $link;
 
-								}						
+									
+						if (preg_match('/pubmed-PMC/', $value))
+						{
+							$ia_url = 'https://archive.org/metadata/' . $value;
+					
+							$ia_json = get($ia_url);
+					
+							$ia_obj = json_decode($ia_json);
+							if ($ia_obj)
+							{
+								$pdf_name = '';
+								foreach ($ia_obj->files as $file)
+								{
+									if ($file->format == 'Text PDF')
+									{
+										// PDF
+										$link = new stdclass;
+										$link->URL = 'https://archive.org/download/' . $value . '/' . $file->name;
+										$link->{'content-type'} = 'application/pdf';
+								
+										// guess the thumbnail
+										$link->thumbnailUrl = 'https://archive.org/download/' . $value . '/page/cover_thumb.jpg';
+					
+										if (!isset($obj->link))
+										{
+											$obj->link = array();
+										}
+										$obj->link[] = $link;
+
+									}						
+								}
 							}
 						}
-					}
-					else
-					{
-						$link = new stdclass;
-						$link->URL = 'https://archive.org/download/' . $value . '/' . $value . '.pdf';
-						$link->{'content-type'} = 'application/pdf';
-					
-						// my hack
-						$link->thumbnailUrl = 'https://archive.org/download/' . $value . '/page/cover_thumb.jpg';
-					
-						if (!isset($obj->link))
+						else
 						{
-							$obj->link = array();
+							$link = new stdclass;
+							$link->URL = 'https://archive.org/download/' . $value . '/' . $value . '.pdf';
+							$link->{'content-type'} = 'application/pdf';
+					
+							// my hack
+							$link->thumbnailUrl = 'https://archive.org/download/' . $value . '/page/cover_thumb.jpg';
+					
+							if (!isset($obj->link))
+							{
+								$obj->link = array();
+							}
+							$obj->link[] = $link;
 						}
-						$obj->link[] = $link;
 					}
 				}
 				break;

@@ -222,9 +222,9 @@ function main()
 	{
 		if (isset($_GET['container']) && isset($_GET['volume']) && isset($_GET['page']))
 		{	
-			$container 		 = $_GET['container'];
-			$volume			 = $_GET['volume'];
-			$page   = $_GET['page'];
+			$container 	= $_GET['container'];
+			$volume		= $_GET['volume'];
+			$page   	= $_GET['page'];
 
 			display_locate_page($container, $volume, $page, $callback);
 			

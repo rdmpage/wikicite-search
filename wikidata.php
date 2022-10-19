@@ -12,9 +12,12 @@ require_once(dirname(__FILE__) . '/lib.php');
 //
 // For publications we also fetch author and container ids
 //
+// return number of calls to Wikidata we made (0 = data is still fresh)
 function fetch_one($id, $force = false)
 {
 	global $config;
+	
+	$call_count = 0;
 	
 	$stack = array($id);
 
@@ -38,17 +41,42 @@ function fetch_one($id, $force = false)
 	
 		if (!file_exists($filename) || $force)
 		{
-			if (!file_exists($dir))
+			$go = true;
+			
+			// Since we may be continually fetching the same file (e.g., for a journal)
+			// only do this if the file for that entity doesn't exist or is "old"
+			if (file_exists($filename) && $force)
 			{
-				$oldumask = umask(0); 
-				mkdir($dir, 0777);
-				umask($oldumask);
+				$modified = filemtime($filename);
+				$since = (time() - $modified)/60; // seconds sicne file modified
+				echo "Last modified: $since\n";
+				
+				// Don't fetch if less than a minute old
+				if ($since < 60)
+				{
+					$go = false;
+					
+					echo "File for $id still fresh\n";
+				}
 			}
 		
-			$json = get('https://www.wikidata.org/w/api.php?action=wbgetentities&ids=' . $id . '&format=json');
+			if ($go)
+			{
+				echo "Fetching $id\n";
 				
-			file_put_contents($filename, $json);
+				$call_count++;
 				
+				if (!file_exists($dir))
+				{
+					$oldumask = umask(0); 
+					mkdir($dir, 0777);
+					umask($oldumask);
+				}
+		
+				$json = get('https://www.wikidata.org/w/api.php?action=wbgetentities&ids=' . $id . '&format=json');
+				
+				file_put_contents($filename, $json);
+			}
 		}
 
 		$json = file_get_contents($filename);
@@ -95,6 +123,8 @@ function fetch_one($id, $force = false)
 			}
 		}
 	}
+	
+	return $call_count;
 }
 
 //----------------------------------------------------------------------------------------
