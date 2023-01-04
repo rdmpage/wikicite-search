@@ -13,7 +13,7 @@ mb_internal_encoding("UTF-8");
 // Hosting--------------------------------------------------------------------------------
 
 $site = 'local';
-$site = 'heroku';
+//$site = 'heroku';
 
 switch ($site)
 {
@@ -47,18 +47,18 @@ if (file_exists(dirname(__FILE__) . '/env.php'))
 	include 'env.php';
 }
 
+// Cache----------------------------------------------------------------------------------
 $config['cache'] = dirname(__FILE__) . '/cache';
 
 // External hard drive
 $config['cache'] = '/Volumes/Ultra Touch/wikicite-search/cache';
 
-
+// Storage--------------------------------------------------------------------------------
 $config['platform'] = 'local';
 $config['platform'] = 'cloud';
 
 if ($config['platform'] == 'local')
 {
-
 	// Local Docker Elasticsearch version 7.6.2 http://localhost:32772
 	$config['elastic_options'] = array(
 			'protocol' 	=> 'http',
@@ -67,12 +67,10 @@ if ($config['platform'] == 'local')
 			'host' 		=> 'localhost',
 			'port' 		=> 55001
 			);
-
 }
 
 if ($config['platform'] == 'cloud')
 {
-
 	// Bitnami
 	$config['elastic_options'] = array(
 			'index' 	=> 'wikicite',
